@@ -1,14 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Room : MonoBehaviour
+namespace RoguelikeVR
 {
-    #region Fields
-    
-    #endregion
+    public class Room : MonoBehaviour
+    {
+        #region Fields
 
-    #region Properties
-    
-    #endregion
+        [SerializeField]
+        private BoxCollider roomBounds;
+
+        [SerializeField]
+        private Exit[] exits;
+
+        #endregion
+
+        #region Properties
+
+        public BoxCollider Bounds => roomBounds;
+        public Exit[] Exits => exits;
+
+        #endregion
+
+        public void RegenerateData()
+        {
+            RegenerateBounds();
+            CacheExits();
+        }
+
+        private void RegenerateBounds()
+        {
+            var bounds = new Bounds();
+            var renderers = GetComponentsInChildren<MeshRenderer>();
+
+            foreach (var r in renderers)
+            {
+                bounds.Encapsulate(r.bounds);
+            }
+
+            roomBounds.transform.position = bounds.center;
+            roomBounds.size = bounds.size;
+        }
+
+        private void CacheExits()
+        {
+            exits = GetComponentsInChildren<Exit>();
+        }
+    }
 }

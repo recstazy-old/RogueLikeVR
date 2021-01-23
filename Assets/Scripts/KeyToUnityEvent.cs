@@ -1,31 +1,32 @@
-using GameOn.UnityHelpers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RoguelikeVR
 {
-    public class LevelGenerator : MonoBehaviour
+    public class KeyToUnityEvent : MonoBehaviour
     {
         #region Fields
 
         [SerializeField]
-        private RoomVariantContainer roomsContainer;
+        private KeyCode key;
 
         [SerializeField]
-        private int roomsCount;
+        private UnityEvent onDown;
 
         #endregion
 
         #region Properties
 
-        public List<Room> Rooms { get; private set; } = new List<Room>();
-
         #endregion
 
-        private void Generate()
+        private void Update()
         {
-            
+            if (Input.GetKeyDown(key))
+            {
+                onDown?.Invoke();
+            }
         }
     }
 }

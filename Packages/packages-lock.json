@@ -14,6 +14,20 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.gameon.easingutils": {
+      "version": "https://gitlab.gameonproduction.com/packages/easingutils.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9008888e6d6148aaa3749739b1ae49d427821045"
+    },
+    "com.unity.gameon.unityhelpers": {
+      "version": "https://gitlab.gameonproduction.com/packages/unityhelpers.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ef05565f34345ac4c77368503834c6960aa3cb5d"
+    },
     "com.unity.ide.rider": {
       "version": "2.0.7",
       "depth": 0,
