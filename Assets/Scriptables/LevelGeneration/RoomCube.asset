@@ -10,6 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae813de4f2bf7b34080e0588fbda2bc7, type: 3}
-  m_Name: OpenedCube
+  m_Name: RoomCube
   m_EditorClassIdentifier: 
-  room: {fileID: 4700756915782393253, guid: 6715104f61c19f34f8c91d6ddf8b7416, type: 3}
+  room:
+    m_SceneAsset: {fileID: 102900000, guid: bf39f5c6ecacc944183a462a411d98e7, type: 3}
+    m_SceneName: RoomCube

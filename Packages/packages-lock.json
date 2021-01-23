@@ -21,6 +21,13 @@
       "dependencies": {},
       "hash": "9008888e6d6148aaa3749739b1ae49d427821045"
     },
+    "com.unity.gameon.scenefield": {
+      "version": "https://gitlab.gameonproduction.com/packages/scene-field.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "caa275e3f10f62dbf133befc38b816ec8fbacfe5"
+    },
     "com.unity.gameon.unityhelpers": {
       "version": "https://gitlab.gameonproduction.com/packages/unityhelpers.git",
       "depth": 0,

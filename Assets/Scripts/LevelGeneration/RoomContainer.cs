@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameOn.SceneFieldProperty;
 
 namespace RoguelikeVR
 {
@@ -10,13 +11,13 @@ namespace RoguelikeVR
         #region Fields
 
         [SerializeField]
-        private Room room;
+        private SceneField room;
 
         #endregion
 
         #region Properties
 
-        public Room Room => room;
+        public SceneField RoomScene => room;
 
         #endregion
     }

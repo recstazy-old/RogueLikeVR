@@ -21,6 +21,7 @@ namespace RoguelikeVR
 
         public BoxCollider Bounds => roomBounds;
         public Exit[] Exits => exits;
+        public Dictionary<Exit, Tunnel> Tunnels { get; private set; }
 
         #endregion
 
@@ -28,6 +29,11 @@ namespace RoguelikeVR
         {
             RegenerateBounds();
             CacheExits();
+        }
+
+        public void SetTunnels(Dictionary<Exit, Tunnel> tunnels)
+        {
+            Tunnels = tunnels;
         }
 
         private void RegenerateBounds()
