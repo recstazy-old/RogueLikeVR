@@ -11,13 +11,17 @@ namespace RoguelikeVR
         #region Fields
 
         [SerializeField]
-        private SceneField room;
+        private SceneField scene;
+
+        [SerializeField]
+        private Room prefab;
 
         #endregion
 
         #region Properties
 
-        public SceneField RoomScene => room;
+        public SceneField RoomScene => scene;
+        public Room Prefab => prefab;
 
         #endregion
     }

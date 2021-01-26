@@ -166,7 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b995c0742b5144fa4ad231db03848a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tunnelPrefab: {fileID: 3817947203113986845, guid: a2b0191a5bf5f47499f0f4c3b8bc0ad2, type: 3}
 --- !u!1 &268837461
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,8 +196,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameConfig: {fileID: 1535437333}
-  roomsContainer: {fileID: 11400000, guid: 282d88c8c4944ee40b7815bd327b0077, type: 2}
+  roomsContainer: {fileID: 11400000, guid: 54805db1724497247a0a36533826c2ca, type: 2}
+  tunnelContainer: {fileID: 11400000, guid: 4d84067f7e806604ca175d067efc66cb, type: 2}
   roomsCount: 10
+  generatePreview: 1
+  connectionBoxPrefab: {fileID: 7413953929012626562, guid: c544f7a34de6b164bad257ad3dee3c55, type: 3}
 --- !u!4 &268837463
 Transform:
   m_ObjectHideFlags: 0
@@ -229,7 +231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0

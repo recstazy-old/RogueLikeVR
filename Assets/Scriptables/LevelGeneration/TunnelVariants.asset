@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e85b23298852347a66792ffea2d793, type: 3}
-  m_Name: RoomVariants
+  m_Script: {fileID: 11500000, guid: a81aab22798a26b49a5b488399e92fcd, type: 3}
+  m_Name: TunnelVariants
   m_EditorClassIdentifier: 
-  roomVariants:
-  - {fileID: 11400000, guid: 53f25bb6e9e51364c9efc6e2cc3c487f, type: 2}
-  - {fileID: 11400000, guid: 336a97e364978b64d866803871caab08, type: 2}
+  variants:
+  - {fileID: 3817947203113986845, guid: a2b0191a5bf5f47499f0f4c3b8bc0ad2, type: 3}

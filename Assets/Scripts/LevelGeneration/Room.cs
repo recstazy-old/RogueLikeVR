@@ -15,6 +15,9 @@ namespace RoguelikeVR
         [SerializeField]
         private Exit[] exits;
 
+        [SerializeField]
+        private GameObject view;
+
         #endregion
 
         #region Properties
@@ -22,6 +25,7 @@ namespace RoguelikeVR
         public BoxCollider Bounds => roomBounds;
         public Exit[] Exits => exits;
         public Dictionary<Exit, Tunnel> Tunnels { get; private set; }
+        public GameObject View => view;
 
         #endregion
 

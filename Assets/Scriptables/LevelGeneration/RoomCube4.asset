@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae813de4f2bf7b34080e0588fbda2bc7, type: 3}
-  m_Name: RoomCube
+  m_Name: RoomCube4
   m_EditorClassIdentifier: 
   scene:
-    m_SceneAsset: {fileID: 102900000, guid: bf39f5c6ecacc944183a462a411d98e7, type: 3}
-    m_SceneName: RoomCube
-  prefab: {fileID: 5793628239265477908, guid: 3c83d87737719df42b39c6f9a8c53ac4, type: 3}
+    m_SceneAsset: {fileID: 102900000, guid: 7533e023fd7e4b94f9dc9afe11fc9ceb, type: 3}
+    m_SceneName: RoomCube4
+  prefab: {fileID: 7825580411554932610, guid: e5aeb072c6d80744b83d875f9e4e80c4, type: 3}

@@ -9,14 +9,31 @@ namespace RoguelikeVR
     {
         #region Fields
 
-        [SerializeField]
-        private Tunnel tunnelPrefab;
+        //private static RoomLoader instance;
 
         #endregion
 
         #region Properties
-    
+
+        //private static RoomLoader Instance
+        //{
+        //    get
+        //    {
+        //        if (instance == null)
+        //        {
+        //            CreateInstance();
+        //        }
+
+        //        return instance;
+        //    }
+        //}
+
         #endregion
+
+        //public static void LoadRoom(RoomContainer container, System.Action<Room> onFinished)
+        //{
+        //    Instance.Load(container, onFinished);
+        //}
 
         public void Load(RoomContainer roomContainer, System.Action<Room> onFinished = null)
         {
@@ -48,25 +65,13 @@ namespace RoguelikeVR
                 }
             }
 
-            if (roomBehaviour != null)
-            {
-                CreateTunnels(roomBehaviour);
-            }
-
             onFinished?.Invoke(roomBehaviour);
         }
 
-        private void CreateTunnels(Room room)
-        {
-            var tunnels = new Dictionary<Exit, Tunnel>();
-
-            foreach (var e in room.Exits)
-            {
-                var tunnel = Instantiate(tunnelPrefab, e.transform.position, e.transform.rotation, e.transform);
-                tunnels.Add(e, tunnel);
-            }
-
-            room.SetTunnels(tunnels);
-        }
+        //private static void CreateInstance()
+        //{
+        //    var loaderObject = new GameObject("RoomLoader");
+        //    instance = loaderObject.AddComponent<RoomLoader>();
+        //}
     }
 }
