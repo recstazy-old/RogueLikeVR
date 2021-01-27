@@ -14,6 +14,8 @@ namespace RoguelikeVR
         public Transform transform => Holder.transform;
         public int ExitCount;
         public List<int> OpenExits = new List<int>();
+        public List<int> BlockedExits = new List<int>();
+        public List<int> ConnectedExits = new List<int>();
         public List<RoomConnection> Connections = new List<RoomConnection>();
         public RoomPlaceholder Holder;
 

@@ -70,7 +70,9 @@ namespace RoguelikeVR
 
         private void GenerateNodeStructure()
         {
-            for (int i = 0; i < roomsCount - 1; i++)
+            int attempt = 0;
+
+            while(roomStructure.Count < roomsCount && attempt < 100)
             {
                 if (availableNodes.Count == 0)
                 {
@@ -86,13 +88,23 @@ namespace RoguelikeVR
 
                     var exit = outNode.OpenExits.Random();
                     var enter = Random.Range(0, inNode.ExitCount);
-                    SetupConnection(outNode, inNode, exit, enter);
-                    ResolveExits();
+                    bool connected = TrySetupConnection(outNode, inNode, exit, enter);
+
+                    if (!connected)
+                    {
+                        outNode.BlockedExits.Add(exit);
+                        outNode.OpenExits.Remove(exit);
+                        continue;
+                    }
+
+                    //ResolveExits();
 
                     roomStructure.Add(inNode);
                     availableNodes.Remove(inNode);
                 }
                 else break;
+
+                attempt++;
             }
 
             FinishedLoading();
@@ -118,7 +130,7 @@ namespace RoguelikeVR
             }
         }
 
-        private void SetupConnection(RoomNode outNode, RoomNode inNode, int exitIndex, int enterIndex)
+        private bool TrySetupConnection(RoomNode outNode, RoomNode inNode, int exitIndex, int enterIndex)
         {
             var exit = outNode.Holder.Exits[exitIndex];
             var enter = inNode.Holder.Exits[enterIndex];
@@ -129,18 +141,50 @@ namespace RoguelikeVR
             Vector3 exitsDelta = exit.position - enter.position;
             inNode.transform.position += exitsDelta;
 
-            var connection = new RoomConnection();
-            connection.ThisRoomIndex = outNode.ThisRoomIndex;
-            connection.OtherRoomIndex = inNode.ThisRoomIndex;
-            connection.ThisExitIndex = exitIndex;
-            connection.OtherExitIndex = enterIndex;
-            outNode.Connections.Add(connection);
+            bool overlaps = OverlapsStructure(inNode, outNode);
 
-            connection.Invert();
-            inNode.Connections.Add(connection);
+            if (overlaps)
+            {
+                inNode.transform.rotation = Quaternion.identity;
+                inNode.transform.position = Vector3.zero;
+            }
+            else
+            {
+                var connection = new RoomConnection();
+                connection.ThisRoomIndex = outNode.ThisRoomIndex;
+                connection.OtherRoomIndex = inNode.ThisRoomIndex;
+                connection.ThisExitIndex = exitIndex;
+                connection.OtherExitIndex = enterIndex;
+                outNode.Connections.Add(connection);
 
-            outNode.OpenExits.Remove(exitIndex);
-            inNode.OpenExits.Remove(enterIndex);
+                connection.Invert();
+                inNode.Connections.Add(connection);
+
+                outNode.OpenExits.Remove(exitIndex);
+                inNode.OpenExits.Remove(enterIndex);
+            }
+
+            return !overlaps;
+        }
+
+        private bool OverlapsStructure(RoomNode inNode, params RoomNode[] ignore)
+        {
+            Bounds nodeBounds = inNode.Holder.Bounds.ConvertToWorldBounds();
+            bool overlapped = false;
+            var roomStructure = this.roomStructure.Except(ignore);
+
+            foreach (var r in roomStructure)
+            {
+                var rBounds = r.Holder.Bounds.ConvertToWorldBounds();
+                overlapped = nodeBounds.Intersects(rBounds);
+
+                if (overlapped)
+                {
+                    break;
+                }
+            }
+
+            return overlapped;
         }
 
         private void ResolveExits()
@@ -150,8 +194,7 @@ namespace RoguelikeVR
 
             foreach (var c in possibleConnections)
             {
-                SetupConnection(roomStructure[c.ExitNode], roomStructure[c.EnterNode], c.ExitIndex, c.EnterIndex);
-                CreateBounds(c);
+                TrySetupConnection(roomStructure[c.ExitNode], roomStructure[c.EnterNode], c.ExitIndex, c.EnterIndex);
             }
         }
 

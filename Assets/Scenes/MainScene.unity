@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.7027331, g: 0.7027331, b: 0.7027331, a: 1}
+  m_AmbientSkyColor: {r: 0.23137255, g: 0.23137255, b: 0.23137255, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -198,7 +198,7 @@ MonoBehaviour:
   gameConfig: {fileID: 1535437333}
   roomsContainer: {fileID: 11400000, guid: 54805db1724497247a0a36533826c2ca, type: 2}
   tunnelContainer: {fileID: 11400000, guid: 4d84067f7e806604ca175d067efc66cb, type: 2}
-  roomsCount: 3
+  roomsCount: 15
   generatePreview: 1
   connectionBoxPrefab: {fileID: 7413953929012626562, guid: c544f7a34de6b164bad257ad3dee3c55, type: 3}
 --- !u!4 &268837463
