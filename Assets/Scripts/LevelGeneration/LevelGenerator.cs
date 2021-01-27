@@ -30,6 +30,7 @@ namespace RoguelikeVR
 
         private List<RoomNode> roomStructure = new List<RoomNode>();
         private System.Action onFinished;
+        private List<RoomNode> availableNodes;
         private List<RoomNode> sourceNodes;
 
         #endregion
@@ -49,9 +50,9 @@ namespace RoguelikeVR
         private void GenerateLevel()
         {
             GenerateSourceNodes();
-            var startNode = sourceNodes.Random();
+            var startNode = availableNodes.Random();
             roomStructure.Add(startNode);
-            sourceNodes.Remove(startNode);
+            availableNodes.Remove(startNode);
             GenerateNodeStructure();
             ClearUnusedNodes();
 
@@ -71,7 +72,7 @@ namespace RoguelikeVR
         {
             for (int i = 0; i < roomsCount - 1; i++)
             {
-                if (sourceNodes.Count == 0)
+                if (availableNodes.Count == 0)
                 {
                     break;
                 }
@@ -81,7 +82,7 @@ namespace RoguelikeVR
                 if (withOpenedExits.Count() > 0)
                 {
                     var outNode = withOpenedExits.ToArray().Random();
-                    var inNode = sourceNodes.Random();
+                    var inNode = availableNodes.Random();
 
                     var exit = outNode.OpenExits.Random();
                     var enter = Random.Range(0, inNode.ExitCount);
@@ -89,7 +90,7 @@ namespace RoguelikeVR
                     ResolveExits();
 
                     roomStructure.Add(inNode);
-                    sourceNodes.Remove(inNode);
+                    availableNodes.Remove(inNode);
                 }
                 else break;
             }
@@ -100,6 +101,7 @@ namespace RoguelikeVR
         private void GenerateSourceNodes()
         {
             sourceNodes = new List<RoomNode>();
+            availableNodes = new List<RoomNode>();
             var holdersParent = new GameObject("RoomsPlaceholders");
 
             for (int i = 0; i < roomsContainer.Variants.Length; i++)
@@ -111,6 +113,7 @@ namespace RoguelikeVR
                 node.Name = roomsContainer.Variants[i].name;
                 GeneratePlaceholder(node);
                 node.Holder.transform.SetParent(holdersParent.transform);
+                availableNodes.Add(node);
                 sourceNodes.Add(node);
             }
         }
@@ -120,19 +123,20 @@ namespace RoguelikeVR
             var exit = outNode.Holder.Exits[exitIndex];
             var enter = inNode.Holder.Exits[enterIndex];
 
-            Quaternion enterLookRotation = Quaternion.LookRotation(-exit.forward, Vector3.up);
-            Quaternion inRoomLookRotation = inNode.transform.rotation * enterLookRotation;
-            inNode.transform.rotation = inRoomLookRotation;
+            Quaternion enterTargetRotation = Quaternion.LookRotation(-exit.forward, Vector3.up);
+            inNode.transform.rotation *= enterTargetRotation * Quaternion.Inverse(enter.rotation);
 
             Vector3 exitsDelta = exit.position - enter.position;
             inNode.transform.position += exitsDelta;
 
             var connection = new RoomConnection();
+            connection.ThisRoomIndex = outNode.ThisRoomIndex;
             connection.OtherRoomIndex = inNode.ThisRoomIndex;
             connection.ThisExitIndex = exitIndex;
             connection.OtherExitIndex = enterIndex;
-
             outNode.Connections.Add(connection);
+
+            connection.Invert();
             inNode.Connections.Add(connection);
 
             outNode.OpenExits.Remove(exitIndex);
@@ -165,18 +169,18 @@ namespace RoguelikeVR
             foreach (var r in roomStructure)
             {
                 var prefab = roomsContainer.Variants[r.ThisRoomIndex].Prefab;
-                Instantiate(prefab.View, r.transform.position, r.transform.rotation, r.Holder.transform);
+                Instantiate(prefab.View, r.transform.position + Vector3.up * Random.Range(-0.1f, 0.1f), r.transform.rotation, r.Holder.transform);
             }
         }
 
         private void ClearUnusedNodes()
         {
-            foreach (var n in sourceNodes)
+            foreach (var n in availableNodes)
             {
                 Destroy(n.Holder.gameObject);
             }
 
-            sourceNodes.Clear();
+            availableNodes.Clear();
         }
 
         private void CreateBounds(ExitResolver.ConnectionData data)
@@ -197,6 +201,45 @@ namespace RoguelikeVR
             connectionView.material.color = new Color(1f, 0f, 1f, 0.5f);
 
             boundsObj.transform.SetParent(exitNode.Holder.Exits[data.ExitIndex]);
+        }
+
+        private List<RoomConnection> drawnConnections = new List<RoomConnection>();
+        private void OnDrawGizmos()
+        {
+            float height = 0.5f;
+            drawnConnections.Clear();
+
+            foreach (var r in roomStructure)
+            {
+                foreach (var c in r.Connections)
+                {
+                    bool isDrawnAlready = drawnConnections.Where(con => con.IsInvertOf(c)).Count() > 0;
+                    if (isDrawnAlready) 
+                        continue;
+
+                    height += 0.05f;
+                    Vector3 moveUp = height * Vector3.up;
+
+                    Vector3 roomPosition = r.transform.position;
+                    Vector3 otherRoomPosition = sourceNodes[c.OtherRoomIndex].transform.position;
+                    Vector3 exitPosition = r.Holder.Exits[c.ThisExitIndex].position;
+                    Vector3 enterPosition = sourceNodes[c.OtherRoomIndex].Holder.Exits[c.OtherExitIndex].position;
+
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawLine(roomPosition + moveUp, exitPosition + moveUp);
+                    Gizmos.DrawLine(enterPosition + moveUp, otherRoomPosition + moveUp);
+
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawLine(exitPosition + moveUp, enterPosition + moveUp);
+                    Gizmos.DrawSphere(exitPosition + moveUp, 0.03f);
+                    Gizmos.DrawLine(exitPosition + moveUp, exitPosition + moveUp + r.Holder.Exits[c.ThisExitIndex].forward * 0.3f);
+
+                    Gizmos.color = Color.blue;
+                    Gizmos.DrawSphere(enterPosition + moveUp, 0.03f);
+                    Gizmos.DrawLine(enterPosition + moveUp, enterPosition + moveUp + sourceNodes[c.OtherRoomIndex].Holder.Exits[c.OtherExitIndex].forward * 0.3f);
+                    drawnConnections.Add(c);
+                }
+            }
         }
     }
 }

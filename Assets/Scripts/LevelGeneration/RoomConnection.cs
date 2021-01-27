@@ -5,20 +5,44 @@ using UnityEngine;
 namespace RoguelikeVR
 {
     [System.Serializable]
-    public class RoomConnection
+    public struct RoomConnection
     {
         #region Fields
 
+        public int ThisRoomIndex;
         public int OtherRoomIndex;
         public int ThisExitIndex;
         public int OtherExitIndex;
-        public int TunnelIndex;
-        public int TunnelDoorIndex;
 
         #endregion
 
         #region Properties
     
         #endregion
+
+        public bool IsInvertOf(RoomConnection other)
+        {
+            other.Invert();
+            return Equal(other);
+        }
+
+        public void Invert()
+        {
+            int temp = ThisRoomIndex;
+            ThisRoomIndex = OtherRoomIndex;
+            OtherRoomIndex = temp;
+
+            temp = ThisExitIndex;
+            ThisExitIndex = OtherExitIndex;
+            OtherExitIndex = temp;
+        }
+
+        public bool Equal(RoomConnection other)
+        {
+            return ThisRoomIndex == other.ThisRoomIndex 
+                && OtherRoomIndex == other.OtherRoomIndex 
+                && ThisExitIndex == other.ThisExitIndex 
+                && OtherExitIndex == other.OtherExitIndex;
+        }
     }
 }
