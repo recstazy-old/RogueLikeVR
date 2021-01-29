@@ -28,6 +28,9 @@ namespace RoguelikeVR
         [SerializeField]
         private MeshRenderer connectionBoxPrefab;
 
+        [SerializeField]
+        private bool debugPerStep;
+
         private List<RoomNode> roomStructure = new List<RoomNode>();
         private System.Action onFinished;
         private List<RoomNode> availableNodes;
@@ -53,12 +56,22 @@ namespace RoguelikeVR
             var startNode = availableNodes.Random();
             roomStructure.Add(startNode);
             availableNodes.Remove(startNode);
-            GenerateNodeStructure();
-            ClearUnusedNodes();
 
-            if (generatePreview)
+            if (!debugPerStep)
             {
-                CreatePreview();
+                GenerateNodeStructure();
+                ClearUnusedNodes();
+
+                if (generatePreview)
+                {
+                    CreatePreview();
+                }
+            }
+            else
+            {
+                StopAllCoroutines();
+                CreatePreview(startNode);
+                StartCoroutine(GenerateRoutine());
             }
         }
 
@@ -107,6 +120,63 @@ namespace RoguelikeVR
                 attempt++;
             }
 
+            if (attempt >= 100)
+            {
+                Debug.LogError("Reached 100 attempts");
+            }
+
+            FinishedLoading();
+        }
+
+        private IEnumerator GenerateRoutine()
+        {
+            int attempt = 0;
+
+            while (roomStructure.Count < roomsCount && attempt < 100)
+            {
+                if (availableNodes.Count == 0)
+                {
+                    break;
+                }
+
+                var withOpenedExits = roomStructure.Where(r => r.OpenExits.Count > 0);
+
+                if (withOpenedExits.Count() > 0)
+                {
+                    var outNode = withOpenedExits.ToArray().Random();
+                    var inNode = availableNodes.Random();
+
+                    var exit = outNode.OpenExits.Random();
+                    var enter = Random.Range(0, inNode.ExitCount);
+                    bool connected = TrySetupConnection(outNode, inNode, exit, enter);
+
+                    if (!connected)
+                    {
+                        outNode.BlockedExits.Add(exit);
+                        outNode.OpenExits.Remove(exit);
+                        continue;
+                    }
+
+                    //ResolveExits();
+
+                    roomStructure.Add(inNode);
+                    CreatePreview(inNode);
+                    availableNodes.Remove(inNode);
+                }
+                else break;
+
+                attempt++;
+
+                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+                yield return null;
+            }
+
+            if (attempt >= 100)
+            {
+                Debug.LogError("Reached 100 attempts");
+            }
+
+            ClearUnusedNodes();
             FinishedLoading();
         }
 
@@ -169,13 +239,13 @@ namespace RoguelikeVR
 
         private bool OverlapsStructure(RoomNode inNode, params RoomNode[] ignore)
         {
-            Bounds nodeBounds = inNode.Holder.Bounds.ConvertToWorldBounds();
+            Bounds nodeBounds = inNode.Holder.Bounds.GetWorldBoundsInXZPlane();
             bool overlapped = false;
             var roomStructure = this.roomStructure.Except(ignore);
 
             foreach (var r in roomStructure)
             {
-                var rBounds = r.Holder.Bounds.ConvertToWorldBounds();
+                var rBounds = r.Holder.Bounds.GetWorldBoundsInXZPlane();
                 overlapped = nodeBounds.Intersects(rBounds);
 
                 if (overlapped)
@@ -211,9 +281,14 @@ namespace RoguelikeVR
         {
             foreach (var r in roomStructure)
             {
-                var prefab = roomsContainer.Variants[r.ThisRoomIndex].Prefab;
-                Instantiate(prefab.View, r.transform.position + Vector3.up * Random.Range(-0.1f, 0.1f), r.transform.rotation, r.Holder.transform);
+                CreatePreview(r);
             }
+        }
+
+        private void CreatePreview(RoomNode node)
+        {
+            var prefab = roomsContainer.Variants[node.ThisRoomIndex].Prefab;
+            Instantiate(prefab.View, node.transform.position + Vector3.up * Random.Range(-0.1f, 0.1f), node.transform.rotation, node.Holder.transform);
         }
 
         private void ClearUnusedNodes()
@@ -282,6 +357,10 @@ namespace RoguelikeVR
                     Gizmos.DrawLine(enterPosition + moveUp, enterPosition + moveUp + sourceNodes[c.OtherRoomIndex].Holder.Exits[c.OtherExitIndex].forward * 0.3f);
                     drawnConnections.Add(c);
                 }
+
+                Gizmos.color = Color.magenta;
+                var bounds = r.Holder.Bounds.GetWorldBoundsInXZPlane();
+                Gizmos.DrawWireCube(bounds.center, bounds.size);
             }
         }
     }

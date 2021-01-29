@@ -201,6 +201,7 @@ MonoBehaviour:
   roomsCount: 15
   generatePreview: 1
   connectionBoxPrefab: {fileID: 7413953929012626562, guid: c544f7a34de6b164bad257ad3dee3c55, type: 3}
+  debugPerStep: 1
 --- !u!4 &268837463
 Transform:
   m_ObjectHideFlags: 0
