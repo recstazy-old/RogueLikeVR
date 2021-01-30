@@ -98,8 +98,6 @@ namespace RoguelikeVR
                         continue;
                     }
 
-                    //ResolveExits();
-
                     roomStructure.Add(inNode);
                     availableNodes.Remove(inNode);
                 }
@@ -147,8 +145,6 @@ namespace RoguelikeVR
                         outNode.OpenExits.Remove(exit);
                         continue;
                     }
-
-                    //ResolveExits();
 
                     roomStructure.Add(inNode);
                     availableNodes.Remove(inNode);
@@ -244,17 +240,6 @@ namespace RoguelikeVR
             return overlapped;
         }
 
-        private void ResolveExits()
-        {
-            var resolver = new ExitResolver(roomStructure);
-            var possibleConnections = resolver.ResolveExits();
-
-            foreach (var c in possibleConnections)
-            {
-                TrySetupConnection(roomStructure[c.ExitNode], roomStructure[c.EnterNode], c.ExitIndex, c.EnterIndex);
-            }
-        }
-
         private void GeneratePlaceholder(RoomNode node)
         {
             var holderObject = new GameObject(node.Name);
@@ -274,26 +259,7 @@ namespace RoguelikeVR
             availableNodes.Clear();
         }
 
-        private void CreateBounds(ExitResolver.ConnectionData data)
-        {
-            var exitNode = roomStructure[data.ExitNode];
-
-            var boundsObj = new GameObject("Connection");
-            var collider = boundsObj.AddComponent<BoxCollider>();
-            collider.isTrigger = true;
-            collider.gameObject.layer = LayerMask.NameToLayer("Bounds");
-            collider.transform.position = data.ConnectionBounds.center;
-            collider.size = data.ConnectionBounds.size;
-
-            var connectionView = Instantiate(connectionBoxPrefab, boundsObj.transform);
-            connectionView.transform.localPosition = Vector3.zero;
-            connectionView.transform.localRotation = Quaternion.identity;
-            connectionView.transform.localScale = collider.size;
-            connectionView.material.color = new Color(1f, 0f, 1f, 0.5f);
-
-            boundsObj.transform.SetParent(exitNode.Holder.Exits[data.ExitIndex].transform);
-        }
-
+        // Gizmos
         private List<RoomConnection> drawnConnections = new List<RoomConnection>();
         private void OnDrawGizmos()
         {
