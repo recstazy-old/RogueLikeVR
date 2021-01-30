@@ -36,9 +36,18 @@ namespace RoguelikeVR
 
         private void RegenerateBounds()
         {
-            var bounds = gameObject.EncapsulateAllChildren();
-            roomBounds.transform.position = bounds.center;
-            roomBounds.size = bounds.size;
+            if (roomBounds == null)
+            {
+                var boundsBox = GetComponentsInChildren<BoxCollider>().FirstOrDefault(r => r.gameObject.layer == LayerMask.NameToLayer("Bounds"));
+                roomBounds = boundsBox;
+            }
+
+            if (roomBounds != null)
+            {
+                var bounds = gameObject.EncapsulateAllChildren();
+                roomBounds.transform.position = bounds.center;
+                roomBounds.size = bounds.size;
+            }
         }
 
         private void CacheExits()
