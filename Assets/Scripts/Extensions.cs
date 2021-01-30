@@ -12,6 +12,24 @@ namespace RoguelikeVR
             return Random.Range(0, enumerable.Count());
         }
 
+        public static Bounds EncapsulateAllChildren(this GameObject parent)
+        {
+            var bounds = new Bounds();
+            var renderers = parent.GetComponentsInChildren<MeshRenderer>();
+
+            if (renderers.Length > 0)
+            {
+                bounds = renderers[0].bounds;
+            }
+
+            for (int i = 1; i < renderers.Length; i++)
+            {
+                bounds.Encapsulate(renderers[i].bounds);
+            }
+
+            return bounds;
+        }
+
         /// <summary>
         /// Works if collider is rotated only around Y axis
         /// </summary>

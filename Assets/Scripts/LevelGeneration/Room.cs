@@ -42,14 +42,7 @@ namespace RoguelikeVR
 
         private void RegenerateBounds()
         {
-            var bounds = new Bounds();
-            var renderers = GetComponentsInChildren<MeshRenderer>();
-
-            foreach (var r in renderers)
-            {
-                bounds.Encapsulate(r.bounds);
-            }
-
+            var bounds = gameObject.EncapsulateAllChildren();
             roomBounds.transform.position = bounds.center;
             roomBounds.size = bounds.size;
         }

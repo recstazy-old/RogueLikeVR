@@ -19,7 +19,7 @@ namespace RoguelikeVR
 
         #endregion
 
-        public void Setup(RoomNode node, BoxCollider bounds, Exit[] exits)
+        public void Setup(RoomNode node, Room prefab, Exit[] exits)
         {
             Node = node;
 
@@ -28,8 +28,8 @@ namespace RoguelikeVR
             Bounds = boundsObject.AddComponent<BoxCollider>();
             Bounds.isTrigger = true;
             Bounds.gameObject.layer = LayerMask.NameToLayer("Bounds");
-            Bounds.transform.localPosition = bounds.transform.localPosition;
-            Bounds.size = bounds.size;
+            Bounds.transform.localPosition = prefab.Bounds.transform.localPosition;
+            Bounds.size = prefab.Bounds.size;
 
             var exitsParent = new GameObject("Exits");
             exitsParent.transform.SetParent(transform);

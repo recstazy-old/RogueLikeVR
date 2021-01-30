@@ -273,7 +273,7 @@ namespace RoguelikeVR
             var holderObject = new GameObject(node.Name);
             var placeholder = holderObject.AddComponent<RoomPlaceholder>();
             var room = roomsContainer.Variants[node.ThisRoomIndex];
-            placeholder.Setup(node, room.Prefab.Bounds, room.Prefab.Exits);
+            placeholder.Setup(node, room.Prefab, room.Prefab.Exits);
             node.Holder = placeholder;
         }
 
