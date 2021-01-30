@@ -17,9 +17,6 @@ namespace RoguelikeVR
         private RoomVariantContainer roomsContainer;
 
         [SerializeField]
-        private TunnelContainer tunnelContainer;
-
-        [SerializeField]
         private int roomsCount;
 
         [SerializeField]
@@ -61,16 +58,10 @@ namespace RoguelikeVR
             {
                 GenerateNodeStructure();
                 ClearUnusedNodes();
-
-                if (generatePreview)
-                {
-                    CreatePreview();
-                }
             }
             else
             {
                 StopAllCoroutines();
-                CreatePreview(startNode);
                 StartCoroutine(GenerateRoutine());
             }
         }
@@ -134,6 +125,9 @@ namespace RoguelikeVR
 
             while (roomStructure.Count < roomsCount && attempt < 100)
             {
+                yield return null;
+                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+                
                 if (availableNodes.Count == 0)
                 {
                     break;
@@ -160,15 +154,11 @@ namespace RoguelikeVR
                     //ResolveExits();
 
                     roomStructure.Add(inNode);
-                    CreatePreview(inNode);
                     availableNodes.Remove(inNode);
                 }
                 else break;
 
                 attempt++;
-
-                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
-                yield return null;
             }
 
             if (attempt >= 100)
@@ -273,22 +263,17 @@ namespace RoguelikeVR
             var holderObject = new GameObject(node.Name);
             var placeholder = holderObject.AddComponent<RoomPlaceholder>();
             var room = roomsContainer.Variants[node.ThisRoomIndex];
-            placeholder.Setup(node, room.Prefab, room.Prefab.Exits);
-            node.Holder = placeholder;
-        }
 
-        private void CreatePreview()
-        {
-            foreach (var r in roomStructure)
+            if (generatePreview)
             {
-                CreatePreview(r);
+                placeholder.Setup(node, room.Prefab);
             }
-        }
-
-        private void CreatePreview(RoomNode node)
-        {
-            var prefab = roomsContainer.Variants[node.ThisRoomIndex].Prefab;
-            Instantiate(prefab.View, node.transform.position + Vector3.up * Random.Range(-0.1f, 0.1f), node.transform.rotation, node.Holder.transform);
+            else
+            {
+                placeholder.SetupWithoutView(node, room.Prefab);
+            }
+           
+            node.Holder = placeholder;
         }
 
         private void ClearUnusedNodes()

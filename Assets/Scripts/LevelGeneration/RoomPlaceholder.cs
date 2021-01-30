@@ -8,7 +8,9 @@ namespace RoguelikeVR
     public class RoomPlaceholder : MonoBehaviour
     {
         #region Fields
-    
+
+        private Room roomIstance;
+
         #endregion
 
         #region Properties
@@ -19,7 +21,16 @@ namespace RoguelikeVR
 
         #endregion
 
-        public void Setup(RoomNode node, Room prefab, Exit[] exits)
+        public void Setup(RoomNode node, Room prefab)
+        {
+            Node = node;
+            roomIstance = Instantiate(prefab);
+            roomIstance.transform.SetParent(transform);
+            Bounds = roomIstance.Bounds;
+            Exits = roomIstance.Exits.Select(e => e.transform).ToArray();
+        }
+
+        public void SetupWithoutView(RoomNode node, Room prefab)
         {
             Node = node;
 
@@ -33,11 +44,11 @@ namespace RoguelikeVR
 
             var exitsParent = new GameObject("Exits");
             exitsParent.transform.SetParent(transform);
-            Exits = new Transform[exits.Length];
+            Exits = new Transform[prefab.Exits.Length];
 
-            for(int i = 0; i < exits.Length; i++)
+            for(int i = 0; i < prefab.Exits.Length; i++)
             {
-                var exit = exits[i];
+                var exit = prefab.Exits[i];
                 var exitObject = new GameObject(exit.name + "_Placeholder");
                 exitObject.transform.SetParent(exitsParent.transform);
                 exitObject.transform.localPosition = exit.transform.localPosition;

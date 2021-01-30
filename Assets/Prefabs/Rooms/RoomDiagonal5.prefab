@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 2067473195}
   - component: {fileID: 2067473194}
   m_Layer: 0
-  m_Name: Floor (2)
+  m_Name: Ceiling2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -389,7 +389,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 91eea12c56d7cab439cfe46cabeb498b, type: 2}
+  - {fileID: 2100000, guid: 7c231625486c54943927bd146cfeb21a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -718,7 +718,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 91eea12c56d7cab439cfe46cabeb498b, type: 2}
+  - {fileID: 2100000, guid: 7c231625486c54943927bd146cfeb21a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2233,7 +2233,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 91eea12c56d7cab439cfe46cabeb498b, type: 2}
+  - {fileID: 2100000, guid: 7c231625486c54943927bd146cfeb21a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
