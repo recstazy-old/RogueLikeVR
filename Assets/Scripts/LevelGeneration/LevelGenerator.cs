@@ -54,7 +54,6 @@ namespace RoguelikeVR
             if (!debugPerStep)
             {
                 GenerateNodeStructure();
-                ClearUnusedNodes();
             }
             else
             {
@@ -65,6 +64,9 @@ namespace RoguelikeVR
 
         private void FinishedLoading()
         {
+            ClearUnusedNodes();
+            CloseExits();
+
             onFinished?.Invoke();
             onFinished = null;
         }
@@ -93,8 +95,6 @@ namespace RoguelikeVR
 
                     if (!connected)
                     {
-                        outNode.BlockedExits.Add(exit);
-                        outNode.OpenExits.Remove(exit);
                         continue;
                     }
 
@@ -141,8 +141,6 @@ namespace RoguelikeVR
 
                     if (!connected)
                     {
-                        outNode.BlockedExits.Add(exit);
-                        outNode.OpenExits.Remove(exit);
                         continue;
                     }
 
@@ -159,7 +157,6 @@ namespace RoguelikeVR
                 Debug.LogError("Reached 100 attempts");
             }
 
-            ClearUnusedNodes();
             FinishedLoading();
         }
 
@@ -238,6 +235,18 @@ namespace RoguelikeVR
             }
 
             return overlapped;
+        }
+
+        private void CloseExits()
+        {
+            foreach (var node in roomStructure)
+            {
+                foreach (var index in node.OpenExits)
+                {
+                    var exit = node.Holder.Exits[index];
+                    exit.Close();
+                }
+            }
         }
 
         private void GeneratePlaceholder(RoomNode node)

@@ -197,9 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameConfig: {fileID: 1535437333}
   roomsContainer: {fileID: 11400000, guid: 54805db1724497247a0a36533826c2ca, type: 2}
-  tunnelContainer: {fileID: 11400000, guid: 4d84067f7e806604ca175d067efc66cb, type: 2}
-  roomsCount: 15
-  generatePreview: 1
+  roomsCount: 30
   connectionBoxPrefab: {fileID: 7413953929012626562, guid: c544f7a34de6b164bad257ad3dee3c55, type: 3}
   debugPerStep: 0
 --- !u!4 &268837463

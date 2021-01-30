@@ -1,3 +1,4 @@
+using GameOn.UnityHelpers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,20 +10,27 @@ namespace RoguelikeVR
         #region Fields
 
         [SerializeField]
-        private Vector2 size;
+        private GameObject[] exitBlockers;
 
         #endregion
 
         #region Properties
 
         public Door Door { get; private set; }
-        public Vector2 Size => size;
 
         #endregion
 
         public void Close()
         {
-
+            if (exitBlockers.Length > 0)
+            {
+                var block = exitBlockers.Random();
+                block.SetActive(true);
+            }
+            else
+            {
+                Debug.LogError("Exit has no block");
+            }
         }
     }
 }
