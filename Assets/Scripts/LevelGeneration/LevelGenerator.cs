@@ -20,9 +20,6 @@ namespace RoguelikeVR
         private int roomsCount;
 
         [SerializeField]
-        private bool generatePreview;
-
-        [SerializeField]
         private MeshRenderer connectionBoxPrefab;
 
         [SerializeField]
@@ -195,10 +192,10 @@ namespace RoguelikeVR
             var exit = outNode.Holder.Exits[exitIndex];
             var enter = inNode.Holder.Exits[enterIndex];
 
-            Quaternion enterTargetRotation = Quaternion.LookRotation(-exit.forward, Vector3.up);
-            inNode.transform.rotation *= enterTargetRotation * Quaternion.Inverse(enter.rotation);
+            Quaternion enterTargetRotation = Quaternion.LookRotation(-exit.transform.forward, Vector3.up);
+            inNode.transform.rotation *= enterTargetRotation * Quaternion.Inverse(enter.transform.rotation);
 
-            Vector3 exitsDelta = exit.position - enter.position;
+            Vector3 exitsDelta = exit.transform.position - enter.transform.position;
             inNode.transform.position += exitsDelta;
 
             bool overlaps = OverlapsStructure(inNode, outNode);
@@ -263,16 +260,7 @@ namespace RoguelikeVR
             var holderObject = new GameObject(node.Name);
             var placeholder = holderObject.AddComponent<RoomPlaceholder>();
             var room = roomsContainer.Variants[node.ThisRoomIndex];
-
-            if (generatePreview)
-            {
-                placeholder.Setup(node, room.Prefab);
-            }
-            else
-            {
-                placeholder.SetupWithoutView(node, room.Prefab);
-            }
-           
+            placeholder.Setup(node, room.Prefab);
             node.Holder = placeholder;
         }
 
@@ -303,7 +291,7 @@ namespace RoguelikeVR
             connectionView.transform.localScale = collider.size;
             connectionView.material.color = new Color(1f, 0f, 1f, 0.5f);
 
-            boundsObj.transform.SetParent(exitNode.Holder.Exits[data.ExitIndex]);
+            boundsObj.transform.SetParent(exitNode.Holder.Exits[data.ExitIndex].transform);
         }
 
         private List<RoomConnection> drawnConnections = new List<RoomConnection>();
@@ -325,8 +313,8 @@ namespace RoguelikeVR
 
                     Vector3 roomPosition = r.transform.position;
                     Vector3 otherRoomPosition = sourceNodes[c.OtherRoomIndex].transform.position;
-                    Vector3 exitPosition = r.Holder.Exits[c.ThisExitIndex].position;
-                    Vector3 enterPosition = sourceNodes[c.OtherRoomIndex].Holder.Exits[c.OtherExitIndex].position;
+                    Vector3 exitPosition = r.Holder.Exits[c.ThisExitIndex].transform.position;
+                    Vector3 enterPosition = sourceNodes[c.OtherRoomIndex].Holder.Exits[c.OtherExitIndex].transform.position;
 
                     Gizmos.color = Color.green;
                     Gizmos.DrawLine(roomPosition + moveUp, exitPosition + moveUp);
@@ -335,11 +323,11 @@ namespace RoguelikeVR
                     Gizmos.color = Color.yellow;
                     Gizmos.DrawLine(exitPosition + moveUp, enterPosition + moveUp);
                     Gizmos.DrawSphere(exitPosition + moveUp, 0.03f);
-                    Gizmos.DrawLine(exitPosition + moveUp, exitPosition + moveUp + r.Holder.Exits[c.ThisExitIndex].forward * 0.3f);
+                    Gizmos.DrawLine(exitPosition + moveUp, exitPosition + moveUp + r.Holder.Exits[c.ThisExitIndex].transform.forward * 0.3f);
 
                     Gizmos.color = Color.blue;
                     Gizmos.DrawSphere(enterPosition + moveUp, 0.03f);
-                    Gizmos.DrawLine(enterPosition + moveUp, enterPosition + moveUp + sourceNodes[c.OtherRoomIndex].Holder.Exits[c.OtherExitIndex].forward * 0.3f);
+                    Gizmos.DrawLine(enterPosition + moveUp, enterPosition + moveUp + sourceNodes[c.OtherRoomIndex].Holder.Exits[c.OtherExitIndex].transform.forward * 0.3f);
                     drawnConnections.Add(c);
                 }
 

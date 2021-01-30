@@ -19,5 +19,10 @@ namespace RoguelikeVR
         public Vector2 Size => size;
 
         #endregion
+
+        public void Close()
+        {
+
+        }
     }
 }

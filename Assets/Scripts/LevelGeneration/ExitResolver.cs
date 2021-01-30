@@ -52,11 +52,11 @@ namespace RoguelikeVR
 
                     foreach (var exitI in nodes[i].OpenExits)
                     {
-                        exit = exitNode.Holder.Exits[exitI];
+                        exit = exitNode.Holder.Exits[exitI].transform;
 
                         foreach (var enterI in nodes[j].OpenExits)
                         {
-                            enter = enterNode.Holder.Exits[enterI];
+                            enter = enterNode.Holder.Exits[enterI].transform;
 
                             float forwardDot = Vector3.Dot(exit.forward, enter.forward);
                             float forwardToDirectionDot = Vector3.Dot(exit.forward, (enter.position - exit.position).normalized);
