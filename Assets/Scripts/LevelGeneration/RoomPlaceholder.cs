@@ -9,7 +9,7 @@ namespace RoguelikeVR
     {
         #region Fields
 
-        private Room roomIstance;
+        private Room roomInstance;
 
         #endregion
 
@@ -18,16 +18,17 @@ namespace RoguelikeVR
         public BoxCollider Bounds { get; private set; }
         public Exit[] Exits { get; private set; }
         public RoomNode Node { get; private set; }
+        public Room RoomInstance => roomInstance;
 
         #endregion
 
         public void Setup(RoomNode node, Room prefab)
         {
             Node = node;
-            roomIstance = Instantiate(prefab);
-            roomIstance.transform.SetParent(transform);
-            Bounds = roomIstance.Bounds;
-            Exits = roomIstance.Exits;
+            roomInstance = Instantiate(prefab);
+            roomInstance.transform.SetParent(transform);
+            Bounds = roomInstance.Bounds;
+            Exits = roomInstance.Exits;
         }
     }
 }

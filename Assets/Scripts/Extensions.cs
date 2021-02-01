@@ -50,5 +50,31 @@ namespace RoguelikeVR
 
             return bounds;
         }
+
+        public static List<RoomConnection> RemoveInverts(this IEnumerable<RoomConnection> connections)
+        {
+            var result = new List<RoomConnection>();
+
+            foreach (var c in connections)
+            {
+                bool canAdd = true;
+
+                foreach (var r in result)
+                {
+                    if (c.IsInvertOf(r))
+                    {
+                        canAdd = false;
+                        break;
+                    }
+                }
+
+                if (canAdd)
+                {
+                    result.Add(c);
+                }
+            }
+
+            return result;
+        }
     }
 }

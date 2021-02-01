@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace RoguelikeVR
 {
@@ -66,6 +67,8 @@ namespace RoguelikeVR
         {
             ClearUnusedNodes();
             CloseExits();
+            var baker = new NavMeshBaker();
+            baker.PrepareAndBake(roomStructure);
 
             onFinished?.Invoke();
             onFinished = null;
