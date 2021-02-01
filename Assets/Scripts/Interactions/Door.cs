@@ -3,6 +3,7 @@ using GameOn.UnityHelpers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RoguelikeVR
 {
@@ -13,12 +14,25 @@ namespace RoguelikeVR
         [SerializeField]
         private EasingExecutable doorAnimation;
 
+        [SerializeField]
+        private UnityEvent onPendingOpen;
+
+        [SerializeField]
+        private UnityEvent onOpened;
+
+        [SerializeField]
+        private UnityEvent onPendingClose;
+
+        [SerializeField]
+        private UnityEvent onClosed;
+
         #endregion
 
         #region Properties
 
         public bool Opened { get; private set; }
         public bool Locked { get; private set; }
+        public bool IsInTransition => doorAnimation.IsRunning;
 
         #endregion
 
@@ -46,26 +60,38 @@ namespace RoguelikeVR
 
         public void Open()
         {
-            if (!Locked && !Opened)
+            if (!Locked && !Opened && !IsInTransition)
             {
                 doorAnimation.TryExecute(true);
 
-                if (doorAnimation.IsRunning)
+                if (IsInTransition)
                 {
-                    this.RunDelayed(doorAnimation.EasingTime, () => Opened = true);
+                    onPendingOpen?.Invoke();
+
+                    this.RunDelayed(doorAnimation.EasingTime, () => 
+                    { 
+                        Opened = true;
+                        onOpened?.Invoke();
+                    });
                 }
             }
         }
 
         public void Close()
         {
-            if (!Locked && Opened)
+            if (!Locked && Opened && !IsInTransition)
             {
                 doorAnimation.TryExecute(false);
 
-                if (doorAnimation.IsRunning)
+                if (IsInTransition)
                 {
-                    this.RunDelayed(doorAnimation.EasingTime, () => Opened = false);
+                    onPendingClose?.Invoke();
+
+                    this.RunDelayed(doorAnimation.EasingTime, () => 
+                    { 
+                        Opened = false;
+                        onClosed?.Invoke();
+                    });
                 }
             }
         }
