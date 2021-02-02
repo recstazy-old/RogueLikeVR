@@ -30,6 +30,16 @@ namespace RoguelikeVR
         [SerializeField]
         private Transform doorsParent;
 
+        [SerializeField]
+        [Range(0.01f, 1f)]
+        private float enemyFraction;
+
+        [SerializeField]
+        private GameObject enemyPrefab;
+
+        [SerializeField]
+        private Transform enemiesParent;
+
         private List<RoomNode> roomStructure = new List<RoomNode>();
         private System.Action onFinished;
         private List<RoomNode> availableNodes;
@@ -68,6 +78,7 @@ namespace RoguelikeVR
             baker.PrepareAndBake(roomStructure);
 
             CreateDynamicDoors();
+            CreateEnemies();
 
             onFinished?.Invoke();
             onFinished = null;
@@ -240,6 +251,16 @@ namespace RoguelikeVR
         {
             var exit = configToStructureIndices[connection.ThisRoomIndex].Holder.Exits[connection.ThisExitIndex];
             Instantiate(doorPrefab, exit.transform.position, exit.transform.rotation, doorsParent);
+        }
+
+        private void CreateEnemies()
+        {
+            var period = Mathf.FloorToInt(1f / enemyFraction);
+
+            for (int i = 1; i < roomStructure.Count; i += period)
+            {
+                Instantiate(enemyPrefab, roomStructure[i].transform.position, roomStructure[i].transform.rotation, enemiesParent);
+            }
         }
 
         private void CloseUnusedExits()
