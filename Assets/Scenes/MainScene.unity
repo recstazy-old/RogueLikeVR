@@ -198,8 +198,9 @@ MonoBehaviour:
   gameConfig: {fileID: 1535437333}
   roomsContainer: {fileID: 11400000, guid: 54805db1724497247a0a36533826c2ca, type: 2}
   roomsCount: 30
-  connectionBoxPrefab: {fileID: 7413953929012626562, guid: c544f7a34de6b164bad257ad3dee3c55, type: 3}
-  debugPerStep: 0
+  doorsFraction: 0.4
+  doorPrefab: {fileID: 8956075366722002312, guid: 7e9f518b07c670c49802bd10558a0650, type: 3}
+  doorsParent: {fileID: 694288300}
 --- !u!4 &268837463
 Transform:
   m_ObjectHideFlags: 0
@@ -210,8 +211,39 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 694288300}
   m_Father: {fileID: 1535437332}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &694288299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 694288300}
+  m_Layer: 0
+  m_Name: Doors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &694288300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694288299}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 268837463}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993

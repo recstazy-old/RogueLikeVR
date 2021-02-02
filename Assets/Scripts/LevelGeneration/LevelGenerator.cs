@@ -21,15 +21,20 @@ namespace RoguelikeVR
         private int roomsCount;
 
         [SerializeField]
-        private MeshRenderer connectionBoxPrefab;
+        [Range(0.01f, 1f)]
+        private float doorsFraction;
 
         [SerializeField]
-        private bool debugPerStep;
+        private Door doorPrefab;
+
+        [SerializeField]
+        private Transform doorsParent;
 
         private List<RoomNode> roomStructure = new List<RoomNode>();
         private System.Action onFinished;
         private List<RoomNode> availableNodes;
         private List<RoomNode> sourceNodes;
+        private Dictionary<int, RoomNode> configToStructureIndices = new Dictionary<int, RoomNode>();
 
         #endregion
 
@@ -50,25 +55,19 @@ namespace RoguelikeVR
             GenerateSourceNodes();
             var startNode = availableNodes.Random();
             roomStructure.Add(startNode);
+            configToStructureIndices.Add(startNode.ThisRoomIndex, startNode);
             availableNodes.Remove(startNode);
-
-            if (!debugPerStep)
-            {
-                GenerateNodeStructure();
-            }
-            else
-            {
-                StopAllCoroutines();
-                StartCoroutine(GenerateRoutine());
-            }
+            GenerateNodeStructure();
         }
 
         private void FinishedLoading()
         {
             ClearUnusedNodes();
-            CloseExits();
+            CloseUnusedExits();
             var baker = new NavMeshBaker();
             baker.PrepareAndBake(roomStructure);
+
+            CreateDynamicDoors();
 
             onFinished?.Invoke();
             onFinished = null;
@@ -78,54 +77,8 @@ namespace RoguelikeVR
         {
             int attempt = 0;
 
-            while(roomStructure.Count < roomsCount && attempt < 100)
-            {
-                if (availableNodes.Count == 0)
-                {
-                    break;
-                }
-
-                var withOpenedExits = roomStructure.Where(r => r.OpenExits.Count > 0);
-
-                if (withOpenedExits.Count() > 0)
-                {
-                    var outNode = withOpenedExits.ToArray().Random();
-                    var inNode = availableNodes.Random();
-
-                    var exit = outNode.OpenExits.Random();
-                    var enter = Random.Range(0, inNode.ExitCount);
-                    bool connected = TrySetupConnection(outNode, inNode, exit, enter);
-
-                    if (!connected)
-                    {
-                        continue;
-                    }
-
-                    roomStructure.Add(inNode);
-                    availableNodes.Remove(inNode);
-                }
-                else break;
-
-                attempt++;
-            }
-
-            if (attempt >= 100)
-            {
-                Debug.LogError("Reached 100 attempts");
-            }
-
-            FinishedLoading();
-        }
-
-        private IEnumerator GenerateRoutine()
-        {
-            int attempt = 0;
-
             while (roomStructure.Count < roomsCount && attempt < 100)
             {
-                yield return null;
-                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
-                
                 if (availableNodes.Count == 0)
                 {
                     break;
@@ -148,6 +101,7 @@ namespace RoguelikeVR
                     }
 
                     roomStructure.Add(inNode);
+                    configToStructureIndices.Add(inNode.ThisRoomIndex, inNode);
                     availableNodes.Remove(inNode);
                 }
                 else break;
@@ -240,7 +194,55 @@ namespace RoguelikeVR
             return overlapped;
         }
 
-        private void CloseExits()
+        private void CreateDynamicDoors()
+        {
+            var startRoom = roomStructure.FirstOrDefault();
+
+            if (startRoom != null)
+            {
+                var connectionsOfFirstRoom = startRoom.Connections;
+
+                foreach (var c in connectionsOfFirstRoom)
+                {
+                    CloseConnectionWithDynamicDoor(c);
+                }
+
+                var connections = roomStructure.GetAllUniqConnections();
+                connections = connections.Where(c =>
+                {
+                    foreach (var firstC in connectionsOfFirstRoom)
+                    {
+                        if (firstC.Equal(c))
+                        {
+                            return false;
+                        }
+
+                        if (firstC.IsInvertOf(c))
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                })
+                .ToList();
+
+                int period = Mathf.FloorToInt(1f / doorsFraction);
+
+                for (int i = 0; i < connections.Count; i += period)
+                {
+                    CloseConnectionWithDynamicDoor(connections[i]);
+                }
+            }
+        }
+
+        private void CloseConnectionWithDynamicDoor(RoomConnection connection)
+        {
+            var exit = configToStructureIndices[connection.ThisRoomIndex].Holder.Exits[connection.ThisExitIndex];
+            Instantiate(doorPrefab, exit.transform.position, exit.transform.rotation, doorsParent);
+        }
+
+        private void CloseUnusedExits()
         {
             foreach (var node in roomStructure)
             {
@@ -271,6 +273,8 @@ namespace RoguelikeVR
             availableNodes.Clear();
         }
 
+        #region Gizmos
+
         // Gizmos
         private List<RoomConnection> drawnConnections = new List<RoomConnection>();
         private void OnDrawGizmos()
@@ -283,7 +287,7 @@ namespace RoguelikeVR
                 foreach (var c in r.Connections)
                 {
                     bool isDrawnAlready = drawnConnections.Where(con => con.IsInvertOf(c)).Count() > 0;
-                    if (isDrawnAlready) 
+                    if (isDrawnAlready)
                         continue;
 
                     height += 0.05f;
@@ -314,5 +318,7 @@ namespace RoguelikeVR
                 Gizmos.DrawWireCube(bounds.center, bounds.size);
             }
         }
+
+        #endregion
     }
 }

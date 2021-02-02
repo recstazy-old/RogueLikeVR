@@ -1,3 +1,4 @@
+using GameOn.UnityHelpers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,6 +76,27 @@ namespace RoguelikeVR
             }
 
             return result;
+        }
+
+        public static List<RoomConnection> GetAllUniqConnections(this IEnumerable<RoomNode> nodes)
+        {
+            var connections = new List<RoomConnection>();
+
+            if (nodes == null || nodes.Count() == 0)
+            {
+                return connections;
+            }
+
+            foreach (var n in nodes)
+            {
+                foreach (var c in n.Connections)
+                {
+                    connections.Add(c);
+                }
+            }
+
+            connections = connections.RemoveInverts();
+            return connections;
         }
     }
 }
