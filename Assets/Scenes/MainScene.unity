@@ -201,7 +201,7 @@ MonoBehaviour:
   doorsFraction: 0.4
   doorPrefab: {fileID: 8956075366722002312, guid: 7e9f518b07c670c49802bd10558a0650, type: 3}
   doorsParent: {fileID: 694288300}
-  enemyFraction: 0.402
+  enemyFraction: 0.886
   enemyPrefab: {fileID: 4782888424449711921, guid: a0222bdee81e18e41b7ad68e0571856e, type: 3}
   enemiesParent: {fileID: 915724948}
 --- !u!4 &268837463

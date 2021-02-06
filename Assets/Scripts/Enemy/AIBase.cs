@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using GameOn.UnityHelpers;
 
 namespace RoguelikeVR
 {
@@ -10,7 +11,7 @@ namespace RoguelikeVR
         #region Fields
 
         [SerializeField]
-        private NavMeshAgent navAgent;
+        private PhysicsMovementBase movement;
 
         #endregion
 
@@ -20,7 +21,7 @@ namespace RoguelikeVR
 
         public void MoveTo(Vector3 position)
         {
-            navAgent.SetDestination(position);
+            movement.MoveTo(position);
         }
     }
 }
