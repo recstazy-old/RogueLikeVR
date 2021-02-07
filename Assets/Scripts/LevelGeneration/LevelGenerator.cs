@@ -74,17 +74,20 @@ namespace RoguelikeVR
         private void FinishedLoading()
         {
             ClearUnusedNodes();
-            CloseUnusedExits();
-            var baker = new NavMeshBaker();
-            baker.PrepareAndBake(roomStructure);
-
-            CreateDynamicDoors();
-            CreateEnemies();
-
             ReplaceHoldersWithScenes();
 
-            onFinished?.Invoke();
-            onFinished = null;
+            this.WaitFramesAndRun(2, () => 
+            {
+                CloseUnusedExits();
+                var baker = new NavMeshBaker();
+                baker.PrepareAndBake(roomStructure);
+
+                CreateDynamicDoors();
+                CreateEnemies();
+
+                onFinished?.Invoke();
+                onFinished = null;
+            });
         }
 
         private void GenerateNodeStructure()
@@ -322,11 +325,17 @@ namespace RoguelikeVR
 
                     foreach (var g in gameObjects)
                     {
+                        g.transform.SetParent(rooms[i].transform);
                         g.transform.position = rooms[i].transform.position;
                         g.transform.rotation = rooms[i].transform.rotation;
-                    }
 
-                    rooms[i].Holder.gameObject.SetActive(false);
+                        var room = g.GetComponent<Room>();
+
+                        if (room != null)
+                        {
+                            rooms[i].Holder.ReplaceRoominstanceWithSceneInstance(room);
+                        }
+                    }
                 }
             });
         }

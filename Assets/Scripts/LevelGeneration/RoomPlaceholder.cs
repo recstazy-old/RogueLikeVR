@@ -25,8 +25,20 @@ namespace RoguelikeVR
         public void Setup(RoomNode node, Room prefab)
         {
             Node = node;
-            roomInstance = Instantiate(prefab);
+            var roomInstance = Instantiate(prefab);
             roomInstance.transform.SetParent(transform);
+            SetupRoomInstance(roomInstance);
+        }
+
+        public void ReplaceRoominstanceWithSceneInstance(Room newRoomInstance)
+        {
+            Destroy(roomInstance.gameObject);
+            SetupRoomInstance(newRoomInstance);
+        }
+
+        private void SetupRoomInstance(Room instance)
+        {
+            roomInstance = instance;
             Bounds = roomInstance.Bounds;
             Exits = roomInstance.Exits;
         }
