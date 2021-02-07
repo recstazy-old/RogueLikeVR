@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 namespace RoguelikeVR
 {
@@ -79,6 +80,8 @@ namespace RoguelikeVR
 
             CreateDynamicDoors();
             CreateEnemies();
+
+            ReplaceHoldersWithScenes();
 
             onFinished?.Invoke();
             onFinished = null;
@@ -292,6 +295,41 @@ namespace RoguelikeVR
             }
 
             availableNodes.Clear();
+        }
+
+        private void ReplaceHoldersWithScenes()
+        {
+            List<RoomNode> rooms = new List<RoomNode>();
+
+            foreach (var r in roomStructure)
+            {
+                var roomVariant = roomsContainer.Variants[r.ThisRoomIndex];
+
+                if (r.Name == "RoomCube4")
+                {
+                    rooms.Add(r);
+                    SceneManager.LoadScene(roomVariant.RoomScene, LoadSceneMode.Additive);
+                    
+                }
+            }
+
+            this.WaitFramesAndRun(1, () => 
+            {
+                for (int i = 0; i < rooms.Count; i++)
+                {
+                    var handle = SceneManager.GetSceneAt(i + 1);
+                    var gameObjects = new List<GameObject>();
+                    handle.GetRootGameObjects(gameObjects);
+
+                    foreach (var g in gameObjects)
+                    {
+                        g.transform.position = rooms[i].transform.position;
+                        g.transform.rotation = rooms[i].transform.rotation;
+                    }
+
+                    rooms[i].Holder.gameObject.SetActive(false);
+                }
+            });
         }
 
         #region Gizmos
