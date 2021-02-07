@@ -16,3 +16,4 @@ MonoBehaviour:
     m_SceneAsset: {fileID: 102900000, guid: 77228697f35c86f499cfb9f6cede3b43, type: 3}
     m_SceneName: RoomCube4FloorExpand
   prefab: {fileID: 2036362104439887261, guid: d29f848fb34ec5e48a5e342592d589d6, type: 3}
+  baked: 1

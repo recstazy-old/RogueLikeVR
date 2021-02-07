@@ -16,12 +16,16 @@ namespace RoguelikeVR
         [SerializeField]
         private Room prefab;
 
+        [SerializeField]
+        private bool baked;
+
         #endregion
 
         #region Properties
 
         public SceneField RoomScene => scene;
         public Room Prefab => prefab;
+        public bool Baked => baked;
 
         #endregion
     }

@@ -14,4 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Rooms/RoomCube4.unity
     guid: 7533e023fd7e4b94f9dc9afe11fc9ceb
+  - enabled: 1
+    path: Assets/Scenes/Rooms/RoomCube4FloorExpand.unity
+    guid: 77228697f35c86f499cfb9f6cede3b43
+  - enabled: 1
+    path: Assets/Scenes/Rooms/RoomDiagonal5.unity
+    guid: 6db2c0145689c2141a72f45a08bbc5ca
+  - enabled: 1
+    path: Assets/Scenes/Rooms/RoomRect4.unity
+    guid: 413f5ed567c81f4438fdb458979154eb
+  - enabled: 1
+    path: Assets/Scenes/Rooms/RoomRect4Oversised.unity
+    guid: 6ab35eb76904f55488d2bf54ddb8e0a5
   m_configObjects: {}

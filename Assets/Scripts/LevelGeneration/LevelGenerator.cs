@@ -305,11 +305,10 @@ namespace RoguelikeVR
             {
                 var roomVariant = roomsContainer.Variants[r.ThisRoomIndex];
 
-                if (r.Name == "RoomCube4")
+                if (roomVariant.Baked)
                 {
                     rooms.Add(r);
                     SceneManager.LoadScene(roomVariant.RoomScene, LoadSceneMode.Additive);
-                    
                 }
             }
 

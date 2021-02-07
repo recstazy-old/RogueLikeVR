@@ -16,3 +16,4 @@ MonoBehaviour:
     m_SceneAsset: {fileID: 102900000, guid: 7533e023fd7e4b94f9dc9afe11fc9ceb, type: 3}
     m_SceneName: RoomCube4
   prefab: {fileID: 7825580411554932610, guid: e5aeb072c6d80744b83d875f9e4e80c4, type: 3}
+  baked: 1
