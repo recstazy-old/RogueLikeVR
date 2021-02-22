@@ -38,6 +38,9 @@ namespace Recstazy.AniPhysics
         [Range(0f, 1f)]
         private float gravityCompensation = 1f;
 
+        [SerializeField]
+        private StabEffector effector;
+
         public bool PositionStab { get => positionStab; set => positionStab = value; }
         public float Attraction { get => GetBlend(0f, attraction); set => attraction = value; }
         public float MaxForce { get => GetBlend(0f, maxForce); set => maxForce = value; }
@@ -46,7 +49,7 @@ namespace Recstazy.AniPhysics
         public float MaxAngularDrag { get => GetBlend(0.05f, maxAngularDrag); set => maxAngularDrag = value; }
         public bool RotationStab { get => rotationStab; set => rotationStab = value; }
         public float RotationStabSpeed { get => GetBlend(0f, rotationStabSpeed); set => rotationStabSpeed = value; }
-        public StabEffector Effector { get; set; }
+        public StabEffector Effector { get => effector; set => effector = value; }
         public float GravityCompensation { get => gravityCompensation; set => gravityCompensation = value; }
 
         public StabSettings(StabSettings source)

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Recstazy.AniPhysics
 {
-    public class BoneAttractor : MonoBehaviour
+    public class BodyAttractor : MonoBehaviour
     {
         #region Fields
 
@@ -82,33 +82,35 @@ namespace Recstazy.AniPhysics
         {
             if (body != null)
             {
-                if (IsGrabbing)
-                {
-                    ReleaseBody();
-                }
-
+                ReleaseCurrentBody();
                 AttachBody(body);
             }
             else
             {
-                if (IsGrabbing)
-                {
-                    ReleaseBody();
-                }
+                ReleaseCurrentBody();
             }
 
             connectedBody = CurrentBody;
         }
 
-        private void ReleaseBody()
+        public void ReleaseBody()
         {
-            if (CurrentBody != null)
-            {
-                CurrentBody.drag = startDrag;
-                CurrentBody.angularDrag = startAngularDrag;
+            ReleaseCurrentBody();
+            connectedBody = CurrentBody;
+        }
 
-                ChangeDetectionModeOnSleep(CurrentBody, CollisionDetectionMode.Discrete);
-                CurrentBody = null;
+        private void ReleaseCurrentBody()
+        {
+            if (IsGrabbing)
+            {
+                if (CurrentBody != null)
+                {
+                    CurrentBody.drag = startDrag;
+                    CurrentBody.angularDrag = startAngularDrag;
+
+                    ChangeDetectionModeOnSleep(CurrentBody, CollisionDetectionMode.Discrete);
+                    CurrentBody = null;
+                }
             }
         }
 

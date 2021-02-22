@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.animation.rigging": "1.0.3",
     "com.unity.collab-proxy": "1.3.9",
     "com.unity.gameon.easingutils": "https://gitlab.gameonproduction.com/packages/easingutils.git",
     "com.unity.gameon.scenefield": "https://gitlab.gameonproduction.com/packages/scene-field.git",

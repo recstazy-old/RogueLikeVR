@@ -68,11 +68,11 @@ namespace Recstazy.AniPhysics
         {
             foreach (var t in touples)
             {
-                var stab = t.Reference.GetComponent<BoneAttractor>();
+                var stab = t.Reference.GetComponent<BodyAttractor>();
 
                 if (stab == null)
                 {
-                    stab = t.Reference.gameObject.AddComponent<BoneAttractor>();
+                    stab = t.Reference.gameObject.AddComponent<BodyAttractor>();
                 }
 
                 var body = t.Target.GetComponent<Rigidbody>();

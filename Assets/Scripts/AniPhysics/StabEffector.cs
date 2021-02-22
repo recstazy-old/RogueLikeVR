@@ -10,7 +10,6 @@ namespace Recstazy.AniPhysics
         #region Fields
 
         [SerializeField]
-        [EditorReadOnly]
         [Range(0f, 1f)]
         private float currentEffect = 1f;
 
@@ -23,7 +22,10 @@ namespace Recstazy.AniPhysics
         private float disabledEffect = 0f;
 
         [SerializeField]
-        private float smoothTime = 1f;
+        private float enableTime = 1f;
+
+        [SerializeField]
+        private float disableTime = 1f;
 
         #endregion
 
@@ -41,11 +43,15 @@ namespace Recstazy.AniPhysics
         public void SetEnabled(bool isEnabled)
         {
             StopAllCoroutines();
-            StartCoroutine(SmoothChangeRoutine(isEnabled ? enabledEffect : disabledEffect));
+            StartCoroutine(SmoothChangeRoutine(isEnabled));
         }
 
-        private IEnumerator SmoothChangeRoutine(float endValue)
+        private IEnumerator SmoothChangeRoutine(bool enable)
         {
+            float endValue = enable ? enabledEffect : disabledEffect;
+            float time = enable ? enableTime : disableTime;
+            time = Mathf.Max(time, 0.001f);
+
             float startValue = currentEffect;
             float t = 0f;
 
@@ -54,8 +60,10 @@ namespace Recstazy.AniPhysics
                 currentEffect = Mathf.Lerp(startValue, endValue, t);
 
                 yield return null;
-                t += Time.deltaTime / smoothTime;
+                t += Time.deltaTime / time;
             }
+
+            currentEffect = endValue;
         }
     }
 }

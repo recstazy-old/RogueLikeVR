@@ -13,6 +13,9 @@ namespace RoguelikeVR
         [SerializeField]
         private PhysicsMovementBase movement;
 
+        [SerializeField]
+        private WeaponHolder weaponHolder;
+
         #endregion
 
         #region Properties
@@ -22,6 +25,16 @@ namespace RoguelikeVR
         public void MoveTo(Vector3 position)
         {
             movement.MoveTo(position);
+        }
+
+        public void LookAt(Transform target)
+        {
+
+        }
+
+        public void SetWeapon(Weapon weapon)
+        {
+            weaponHolder.SetWeapon(weapon);
         }
     }
 }
