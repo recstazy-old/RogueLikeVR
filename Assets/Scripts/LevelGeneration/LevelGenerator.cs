@@ -3,17 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using RoguelikeVR.Interactions;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.LevelGeneration
 {
     public class LevelGenerator : MonoBehaviour
     {
         #region Fields
-
-        [SerializeField]
-        private GameConfig gameConfig;
 
         [SerializeField]
         private RoomVariantContainer roomsContainer;

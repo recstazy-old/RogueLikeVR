@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameOn.SceneFieldProperty;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.LevelGeneration
 {
     [CreateAssetMenu(fileName = "NewRoom", menuName = "Level Generation/New Room", order = 131)]
     public class RoomContainer : ScriptableObject

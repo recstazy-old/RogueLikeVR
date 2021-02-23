@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.Interactions
 {
     public class Door : MonoBehaviour
     {

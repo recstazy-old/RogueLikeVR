@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.LevelGeneration
 {
     public class NavMeshBaker
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.Interactions
 {
     public class Grip : MonoBehaviour
     {

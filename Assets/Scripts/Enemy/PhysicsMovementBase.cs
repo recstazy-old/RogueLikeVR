@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.AI
 {
     public class PhysicsMovementBase : MonoBehaviour
     {

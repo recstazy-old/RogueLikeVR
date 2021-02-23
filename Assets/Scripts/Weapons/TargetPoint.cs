@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RoguelikeVR.LevelGeneration
+namespace RoguelikeVR.Weapons
 {
-    public class FloorSurface : MonoBehaviour
+    public class TargetPoint : MonoBehaviour
     {
         #region Fields
-    
+		
         #endregion
 
         #region Properties
-    
+		
         #endregion
     }
 }

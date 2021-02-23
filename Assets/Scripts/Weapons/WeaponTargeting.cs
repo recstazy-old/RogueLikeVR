@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.Weapons
 {
     public class WeaponTargeting : MonoBehaviour
     {
@@ -12,7 +12,7 @@ namespace RoguelikeVR
         private Transform weaponPose;
 
         [SerializeField]
-        private Transform targetPoint;
+        private TargetPoint targetPoint;
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace RoguelikeVR
         {
             if (weaponPose != null && targetPoint != null)
             {
-                weaponPose.LookAt(targetPoint);
+                weaponPose.LookAt(targetPoint.transform);
             }
         }
     }

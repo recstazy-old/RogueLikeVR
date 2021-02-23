@@ -2,8 +2,9 @@ using GameOn.UnityHelpers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RoguelikeVR.Interactions;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.LevelGeneration
 {
     public class Exit : MonoBehaviour
     {

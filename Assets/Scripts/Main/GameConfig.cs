@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RoguelikeVR.LevelGeneration;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.Main
 {
     public class GameConfig : MonoBehaviour
     {

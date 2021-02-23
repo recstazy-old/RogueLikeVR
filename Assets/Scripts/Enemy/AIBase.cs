@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using GameOn.UnityHelpers;
+using RoguelikeVR.Weapons;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.AI
 {
     public class AIBase : MonoBehaviour
     {

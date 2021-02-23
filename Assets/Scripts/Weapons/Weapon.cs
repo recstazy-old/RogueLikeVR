@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RoguelikeVR.Interactions;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.Weapons
 {
     public class Weapon : MonoBehaviour
     {

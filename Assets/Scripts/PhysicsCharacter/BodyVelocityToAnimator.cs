@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.PhysicsCharacters
 {
     public class BodyVelocityToAnimator : MonoBehaviour
     {
@@ -30,8 +30,9 @@ namespace RoguelikeVR
         {
             if (body != null && animator != null)
             {
-                animator.SetFloat(directionXName, body.velocity.x);
-                animator.SetFloat(directionZName, body.velocity.z);
+                var velocityLocal = body.transform.InverseTransformPoint(body.velocity);
+                animator.SetFloat(directionXName, velocityLocal.x);
+                animator.SetFloat(directionZName, velocityLocal.z);
             }
         }
     }

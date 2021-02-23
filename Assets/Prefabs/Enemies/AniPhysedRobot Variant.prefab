@@ -279,7 +279,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 314361896}
-  - {fileID: 1824725983}
+  - {fileID: 4894059155585483687}
   m_Father: {fileID: 957795356117976929}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -402,12 +402,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824725982}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.338, y: 2.6, z: 0.861}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1140233341}
-  m_RootOrder: 1
+  m_Father: {fileID: 4894059155585483687}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1824725984
 MonoBehaviour:
@@ -510,8 +510,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d66a4dcc214ad44ea9ed38473b9f021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPose: {fileID: 1824725983}
+  weaponPose: {fileID: 4894059155585483687}
   targetPoint: {fileID: 0}
+--- !u!1 &5055131675217585865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4894059155585483687}
+  m_Layer: 0
+  m_Name: WeaponPose
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4894059155585483687
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5055131675217585865}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2436, y: 2.621, z: 0.166}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1824725983}
+  m_Father: {fileID: 1140233341}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &211492694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,7 +627,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 109173984, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
       propertyPath: sleepVelocityTreshold
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 109173984, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
       propertyPath: onFall.m_PersistentCalls.m_Calls.Array.size
@@ -665,6 +696,22 @@ PrefabInstance:
     - target: {fileID: 358284121818543260, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
       propertyPath: disableTime
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2616446462921153943, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
+      propertyPath: m_LowTwistLimit.limit
+      value: -130
+      objectReference: {fileID: 0}
+    - target: {fileID: 2616446462921153943, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
+      propertyPath: m_HighTwistLimit.limit
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: 2616446463955090915, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
+      propertyPath: m_LowTwistLimit.limit
+      value: -130
+      objectReference: {fileID: 0}
+    - target: {fileID: 2616446463955090915, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
+      propertyPath: m_HighTwistLimit.limit
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 6235398494238887381, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
       propertyPath: m_Name
@@ -747,6 +794,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3280681836558602873, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
   m_PrefabInstance: {fileID: 4887090090381499231}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &8156113613221536833 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3666555259524316958, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
+  m_PrefabInstance: {fileID: 4887090090381499231}
+  m_PrefabAsset: {fileID: 0}
 --- !u!136 &7466144343577201474 stripped
 CapsuleCollider:
   m_CorrespondingSourceObject: {fileID: 2616446464698830877, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
@@ -755,11 +807,6 @@ CapsuleCollider:
 --- !u!4 &1538818679219164809 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6235398494238887382, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
-  m_PrefabInstance: {fileID: 4887090090381499231}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8156113613221536833 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3666555259524316958, guid: 101489e188c357f4baf6e22b4d9925dd, type: 3}
   m_PrefabInstance: {fileID: 4887090090381499231}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5146224345103390290 stripped

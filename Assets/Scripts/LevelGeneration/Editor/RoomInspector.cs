@@ -5,7 +5,7 @@ using UnityEditor;
 using GameOn.UnityHelpers;
 using UnityEditor.SceneManagement;
 
-namespace RoguelikeVR
+namespace RoguelikeVR.LevelGeneration
 {
     [CustomEditor(typeof(Room), true)]
     [CanEditMultipleObjects]

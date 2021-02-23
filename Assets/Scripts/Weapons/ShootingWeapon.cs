@@ -1,26 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace RoguelikeVR.Interactions
+namespace RoguelikeVR.Weapons
 {
-    public class Interactable : MonoBehaviour
+    public class ShootingWeapon : Weapon
     {
         #region Fields
 
         [SerializeField]
-        private UnityEvent onInteraction;
+        private Transform shootPose;
 
         #endregion
 
         #region Properties
-    
+		
         #endregion
 
-        public void Interact()
+        public void TriggerPull()
         {
-            onInteraction?.Invoke();
+
+        }
+
+        public void TriggerRelease()
+        {
+
         }
     }
 }
