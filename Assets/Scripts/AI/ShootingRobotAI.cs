@@ -18,6 +18,12 @@ namespace RoguelikeVR.AI
         private TargetPoint testTargetPoint;
 
         [SerializeField]
+        private float obstacleStopDistance;
+
+        [SerializeField]
+        private float hideChance = 0.25f;
+
+        [SerializeField]
         private Vector2 idleTimeRange;
 
         [SerializeField]
@@ -118,21 +124,25 @@ namespace RoguelikeVR.AI
 
         private void FindMovementTarget()
         {
-            var direction = targetPoint.transform.position - headPose.position;
-            var ray = new Ray(headPose.position, direction.normalized);
-            var hits = Physics.RaycastAll(ray, direction.magnitude, obstacleMask, QueryTriggerInteraction.Ignore);
+            bool willTryHide = hideChance.RandomBoolChance();
 
-            if (hits.Length > 0)
+            if (willTryHide)
             {
-                var closest = hits.OrderBy(h => h.distance).FirstOrDefault();
-                movementPosition = closest.point;
+                var direction = targetPoint.transform.position - headPose.position;
+                var ray = new Ray(headPose.position, direction.normalized);
+                var hits = Physics.RaycastAll(ray, direction.magnitude, obstacleMask, QueryTriggerInteraction.Ignore);
+
+                if (hits.Length > 0)
+                {
+                    var closest = hits.OrderBy(h => h.distance).FirstOrDefault();
+                    movementPosition = closest.point + closest.normal * obstacleStopDistance;
+                    return;
+                }
             }
-            else
-            {
-                Vector3 randomInCircle = Random.onUnitSphere * Random.Range(randomRunRadiusRange.x, randomRunRadiusRange.y);
-                randomInCircle.y = 0f;
-                movementPosition = transform.position + randomInCircle;
-            }
+
+            Vector3 randomInCircle = Random.onUnitSphere * Random.Range(randomRunRadiusRange.x, randomRunRadiusRange.y);
+            randomInCircle.y = 0f;
+            movementPosition = transform.position + randomInCircle;
         }
     }
 }

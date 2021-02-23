@@ -99,5 +99,11 @@ namespace RoguelikeVR
             connections = connections.RemoveInverts();
             return connections;
         }
+
+        public static bool RandomBoolChance(this float chance)
+        {
+            float value = Random.Range(0f, 1f);
+            return value <= chance;
+        }
     }
 }
