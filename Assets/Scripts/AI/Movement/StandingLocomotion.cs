@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RoguelikeVR.AI
 {
-    public class StandingLocomotion : MonoBehaviour, IPhysicsMovement
+    public class StandingLocomotion : MonoBehaviour, IPhysicsMovement, IPhysicsLookAt
     {
         #region Fields
 
@@ -23,11 +23,26 @@ namespace RoguelikeVR.AI
         [SerializeField]
         private float stopVelocity = 0.01f;
 
+        private Transform lookTarget;
+        private Rigidbody body;
+
         #endregion
 
         #region Properties
 
         #endregion
+
+        private void FixedUpdate()
+        {
+            if (lookTarget != null)
+            {
+                var distance = lookTarget.position - body.position;
+                distance.y = 0f;
+                var lookRotation = Quaternion.LookRotation(distance.normalized, Vector3.up);
+                Quaternion newRotation = Quaternion.Lerp(body.rotation, lookRotation, rotationSpeed * Time.fixedDeltaTime);
+                body.MoveRotation(newRotation);
+            }
+        }
 
         public void MoveBody(Rigidbody body, Transform currentTarget)
         {
@@ -46,9 +61,12 @@ namespace RoguelikeVR.AI
                     body.velocity -= body.velocity * 0.1f;
                 }
             }
-            
-            Quaternion newRotation = Quaternion.Lerp(body.rotation, currentTarget.rotation, rotationSpeed * Time.fixedDeltaTime);
-            body.MoveRotation(newRotation);
+        }
+
+        public void MoveBodyRotation(Rigidbody body, Transform target)
+        {
+            this.body = body;
+            lookTarget = target;
         }
     }
 }

@@ -26,12 +26,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046600682164374262}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.027, z: 0.423}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.02699995, z: 0.42300004}
   m_LocalScale: {x: 0.081585996, y: 0.081585996, z: 0.081585996}
   m_Children: []
-  m_Father: {fileID: 7112049260746278052}
-  m_RootOrder: 0
+  m_Father: {fileID: 7112049261210375295}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8102542449450104559
 MeshFilter:
@@ -95,6 +95,36 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2866542088736592184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6155201331288471574}
+  m_Layer: 0
+  m_Name: ShootPose
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6155201331288471574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2866542088736592184}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.02699995, z: 0.597}
+  m_LocalScale: {x: 0.081585996, y: 0.081585996, z: 0.081585996}
+  m_Children: []
+  m_Father: {fileID: 7112049260746278052}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7112049260746278053
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7112049260746278052}
   - component: {fileID: 7112049260746278055}
+  - component: {fileID: 6491177438426240880}
   - component: {fileID: 806816124}
   m_Layer: 0
   m_Name: SimpleWeapon
@@ -124,9 +155,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.833, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5243521929241347922}
   - {fileID: 7112049261210375295}
   - {fileID: 7112049261324645143}
+  - {fileID: 6155201331288471574}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -144,6 +175,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainGripPoint: {fileID: 1602765977}
   secondaryGripPoints: []
+  implementation: {fileID: 6491177438426240880}
+--- !u!114 &6491177438426240880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7112049260746278053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d381d4430f0a3b34bab4ec81ee550e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPose: {fileID: 6155201331288471574}
+  projectilePrefab: {fileID: 243957191698749711, guid: f64cd029c6c55fb48befb568146198df, type: 3}
+  impulse: 20
 --- !u!54 &806816124
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -424,8 +471,9 @@ Transform:
   m_Children:
   - {fileID: 7112049260813085706}
   - {fileID: 7112049261040956614}
+  - {fileID: 5243521929241347922}
   m_Father: {fileID: 7112049260746278052}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7112049261324645140
 GameObject:
@@ -456,5 +504,5 @@ Transform:
   m_Children:
   - {fileID: 7112049260798386973}
   m_Father: {fileID: 7112049260746278052}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

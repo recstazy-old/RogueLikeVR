@@ -15,6 +15,9 @@ namespace RoguelikeVR.Weapons
         [SerializeField]
         private Grip[] secondaryGripPoints;
 
+        [SerializeField]
+        private WeaponComponent implementation;
+
         #endregion
 
         #region Properties
@@ -28,6 +31,16 @@ namespace RoguelikeVR.Weapons
         private void Awake()
         {
             MainBody = GetComponent<Rigidbody>();
+        }
+
+        public void StartUsingWeapon()
+        {
+            implementation?.StartUsing();
+        }
+
+        public void StopUsingWeapon()
+        {
+            implementation?.StopUsing();
         }
     }
 }

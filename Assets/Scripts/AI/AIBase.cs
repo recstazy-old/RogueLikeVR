@@ -19,7 +19,9 @@ namespace RoguelikeVR.AI
         #endregion
 
         #region Properties
-    
+
+        public WeaponHolder WeaponHolder { get => weaponHolder; }
+
         #endregion
 
         public void MoveTo(Vector3 position)
@@ -29,12 +31,12 @@ namespace RoguelikeVR.AI
 
         public void LookAt(Transform target)
         {
-
+            movement.LookAt(target);
         }
 
         public void SetWeapon(Weapon weapon)
         {
-            weaponHolder.SetWeapon(weapon);
+            WeaponHolder.SetWeapon(weapon);
         }
     }
 }

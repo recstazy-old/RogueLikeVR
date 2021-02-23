@@ -354,6 +354,50 @@ Transform:
   m_Father: {fileID: 1708476046}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1239074994 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2105273886315905718, guid: 32fe6600e37902846bec669394f2815a, type: 3}
+  m_PrefabInstance: {fileID: 1538818679656510251}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1447083580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 314361895, guid: 32fe6600e37902846bec669394f2815a, type: 3}
+  m_PrefabInstance: {fileID: 1538818679656510251}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1447083582 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 314361898, guid: 32fe6600e37902846bec669394f2815a, type: 3}
+  m_PrefabInstance: {fileID: 1538818679656510251}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447083580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5954c20bdeab38042a28ac9c4f7dcd97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1447083583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447083580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a08b9d47b9defb4095b0746d91be08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiBase: {fileID: 1447083582}
+  testTargetPoint: {fileID: 1223369117}
+  idleTimeRange: {x: 2, y: 5}
+  randomRunRadius: 15
+  headPose: {fileID: 1239074994}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1
+  shootIdleRange: {x: 3, y: 5}
+  timeBetweenShotsRange: {x: 0.1, y: 0.3}
+  shotsCountRange: {x: 2, y: 5}
 --- !u!1 &1595336833
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +588,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 209640446, guid: 32fe6600e37902846bec669394f2815a, type: 3}
+      propertyPath: rotationSpeed
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 1140233340, guid: 32fe6600e37902846bec669394f2815a, type: 3}
       propertyPath: m_Icon
       value: 

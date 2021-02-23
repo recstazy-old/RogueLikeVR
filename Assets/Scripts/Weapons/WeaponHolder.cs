@@ -25,6 +25,8 @@ namespace RoguelikeVR.Weapons
 
         #region Properties
 
+        public Weapon Weapon => weapon;
+
         #endregion
 
         private void Start()

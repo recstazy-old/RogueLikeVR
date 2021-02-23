@@ -4,27 +4,40 @@ using UnityEngine;
 
 namespace RoguelikeVR.Weapons
 {
-    public class ShootingWeapon : Weapon
+    public class ShootingWeapon : WeaponComponent
     {
         #region Fields
 
         [SerializeField]
-        private Transform shootPose;
+        protected Transform shootPose;
 
         #endregion
 
         #region Properties
-		
+
         #endregion
 
-        public void TriggerPull()
+        protected override void StartedUsing()
         {
-
+            TriggerPull();
         }
 
-        public void TriggerRelease()
+        protected override void StoppedUsing()
         {
+            TriggerRelease();
+        }
 
+        protected virtual void TriggerPulled() { }
+        protected virtual void TriggerReleased() { }
+
+        private void TriggerPull()
+        {
+            TriggerPulled();
+        }
+
+        private void TriggerRelease()
+        {
+            TriggerReleased();
         }
     }
 }

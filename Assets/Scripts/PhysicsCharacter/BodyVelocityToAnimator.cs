@@ -30,7 +30,7 @@ namespace RoguelikeVR.PhysicsCharacters
         {
             if (body != null && animator != null)
             {
-                var velocityLocal = body.transform.InverseTransformPoint(body.velocity);
+                var velocityLocal = body.transform.InverseTransformVector(body.velocity);
                 animator.SetFloat(directionXName, velocityLocal.x);
                 animator.SetFloat(directionZName, velocityLocal.z);
             }

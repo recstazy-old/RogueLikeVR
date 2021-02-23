@@ -58,5 +58,13 @@ namespace RoguelikeVR.AI
                 navAgent.SetDestination(target);
             }
         }
+
+        public void LookAt(Transform target)
+        {
+            if (movementImplementation is IPhysicsLookAt)
+            {
+                (movementImplementation as IPhysicsLookAt)?.MoveBodyRotation(body, target);
+            }
+        }
     }
 }
