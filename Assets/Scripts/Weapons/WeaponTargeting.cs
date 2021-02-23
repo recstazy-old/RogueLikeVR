@@ -18,13 +18,15 @@ namespace RoguelikeVR.Weapons
 
         #region Properties
 
+        public TargetPoint TargetPoint { get => targetPoint; set => targetPoint = value; }
+
         #endregion
 
         private void FixedUpdate()
         {
-            if (weaponPose != null && targetPoint != null)
+            if (weaponPose != null && TargetPoint != null)
             {
-                weaponPose.LookAt(targetPoint.transform);
+                weaponPose.LookAt(TargetPoint.transform);
             }
         }
     }

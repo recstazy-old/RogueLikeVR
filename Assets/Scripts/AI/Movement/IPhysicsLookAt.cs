@@ -6,6 +6,7 @@ namespace RoguelikeVR
 {
     public interface IPhysicsLookAt
     {
+        public bool IsActive { get; set; }
         public void MoveBodyRotation(Rigidbody body, Transform target);
     }
 }

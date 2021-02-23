@@ -30,35 +30,43 @@ namespace RoguelikeVR.AI
 
         #region Properties
 
+        public bool IsActive { get; set; }
+
         #endregion
 
         private void FixedUpdate()
         {
-            if (lookTarget != null)
+            if (IsActive)
             {
-                var distance = lookTarget.position - body.position;
-                distance.y = 0f;
-                var lookRotation = Quaternion.LookRotation(distance.normalized, Vector3.up);
-                Quaternion newRotation = Quaternion.Lerp(body.rotation, lookRotation, rotationSpeed * Time.fixedDeltaTime);
-                body.MoveRotation(newRotation);
+                if (lookTarget != null)
+                {
+                    var distance = lookTarget.position - body.position;
+                    distance.y = 0f;
+                    var lookRotation = Quaternion.LookRotation(distance.normalized, Vector3.up);
+                    Quaternion newRotation = Quaternion.Lerp(body.rotation, lookRotation, rotationSpeed * Time.fixedDeltaTime);
+                    body.MoveRotation(newRotation);
+                }
             }
         }
 
         public void MoveBody(Rigidbody body, Transform currentTarget)
         {
-            var distance = currentTarget.position - body.position;
+            if (IsActive)
+            {
+                var distance = currentTarget.position - body.position;
 
-            if (distance.magnitude > stopDistance)
-            {
-                var force = distance * accelerationForce;
-                force = Mathf.Min(force.magnitude, maxForce) * force.normalized;
-                body.AddForce(force, ForceMode.Force);
-            }
-            else
-            {
-                if (body.velocity.magnitude >= stopVelocity)
+                if (distance.magnitude > stopDistance)
                 {
-                    body.velocity -= body.velocity * 0.1f;
+                    var force = distance * accelerationForce;
+                    force = Mathf.Min(force.magnitude, maxForce) * force.normalized;
+                    body.AddForce(force, ForceMode.Force);
+                }
+                else
+                {
+                    if (body.velocity.magnitude >= stopVelocity)
+                    {
+                        body.velocity -= body.velocity * 0.1f;
+                    }
                 }
             }
         }

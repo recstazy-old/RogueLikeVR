@@ -6,6 +6,7 @@ namespace RoguelikeVR.AI
 {
     public interface IPhysicsMovement
     {
+        public bool IsActive { get; set; }
         void MoveBody(Rigidbody body, Transform currentTarget);
     }
 }

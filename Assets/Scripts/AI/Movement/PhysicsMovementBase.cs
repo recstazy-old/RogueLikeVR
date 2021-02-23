@@ -18,6 +18,9 @@ namespace RoguelikeVR.AI
         [SerializeField]
         private float navAgentWaitDistance;
 
+        [SerializeField]
+        private bool canMoveonStart;
+
         private IPhysicsMovement movementImplementation;
 
         #endregion
@@ -27,10 +30,11 @@ namespace RoguelikeVR.AI
         public Rigidbody Body => body;
         public NavMeshAgent NavAgent => navAgent;
         public float NavAgentWaitDistance { get => navAgentWaitDistance; set => navAgentWaitDistance = value; }
+        public bool CanMove { get; private set; }
 
         #endregion
 
-        private void Awake()
+        private void Start()
         {
             movementImplementation = GetComponent<IPhysicsMovement>();
 
@@ -39,15 +43,46 @@ namespace RoguelikeVR.AI
                 navAgent.gameObject.name = body.gameObject.name + "_NavAgent";
                 navAgent.transform.SetParent(body.transform.parent);
             }
+
+            SetCanMove(canMoveonStart);
         }
 
         private void FixedUpdate()
         {
-            if (body != null && navAgent != null)
+            if (CanMove)
             {
-                navAgent.isStopped = Vector3.Distance(body.position, navAgent.transform.position) > navAgentWaitDistance;
-                movementImplementation?.MoveBody(body, navAgent.transform);
+                if (body != null && navAgent != null)
+                {
+                    navAgent.isStopped = Vector3.Distance(body.position, navAgent.transform.position) > navAgentWaitDistance;
+                    movementImplementation?.MoveBody(body, navAgent.transform);
+                }
             }
+        }
+
+        public void SetCanMove(bool canMove)
+        {
+            if (canMove != CanMove)
+            {
+                CanMove = canMove;
+                
+                if (!CanMove)
+                {
+                    StopMovement();
+                }
+
+                if (movementImplementation != null)
+                {
+                    movementImplementation.IsActive = CanMove;
+                }
+            }
+        }
+
+        public void StopMovement()
+        {
+            navAgent.ResetPath();
+            navAgent.isStopped = true;
+            navAgent.transform.position = body.position;
+            navAgent.isStopped = false;
         }
 
         public void MoveTo(Vector3 target)

@@ -26,27 +26,31 @@ namespace RoguelikeVR.AI
 
         public float Force { get => forceMagnitude; set => forceMagnitude = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
+        public bool IsActive { get; set; }
 
         #endregion
 
         public void MoveBody(Rigidbody body, Transform currentTarget)
         {
-            var xzVelocity = body.velocity;
-            xzVelocity.y = 0f;
-
-            if (xzVelocity.magnitude <= maxSpeed)
+            if (IsActive)
             {
-                Vector3 force = (currentTarget.transform.position - body.transform.position).normalized;
-                force.y = 0f;
+                var xzVelocity = body.velocity;
+                xzVelocity.y = 0f;
 
-                var distance = currentTarget.position - body.position;
-                distance.y = 0f;
-                float alpha = Mathf.Clamp01(distance.magnitude - forceFallofDistance);
-                alpha *= alpha;
-                float magnetude = Mathf.Lerp(0f, forceMagnitude, alpha);
-                force = force * magnetude;
+                if (xzVelocity.magnitude <= maxSpeed)
+                {
+                    Vector3 force = (currentTarget.transform.position - body.transform.position).normalized;
+                    force.y = 0f;
 
-                body.AddForceAtPosition(force, body.position + Vector3.up * forceApplyHeight, ForceMode.Force);
+                    var distance = currentTarget.position - body.position;
+                    distance.y = 0f;
+                    float alpha = Mathf.Clamp01(distance.magnitude - forceFallofDistance);
+                    alpha *= alpha;
+                    float magnetude = Mathf.Lerp(0f, forceMagnitude, alpha);
+                    force = force * magnetude;
+
+                    body.AddForceAtPosition(force, body.position + Vector3.up * forceApplyHeight, ForceMode.Force);
+                }
             }
         }
     }

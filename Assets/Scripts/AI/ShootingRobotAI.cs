@@ -21,7 +21,7 @@ namespace RoguelikeVR.AI
         private Vector2 idleTimeRange;
 
         [SerializeField]
-        private float randomRunRadius;
+        private Vector2 randomRunRadiusRange;
 
         [SerializeField]
         private Transform headPose;
@@ -45,6 +45,8 @@ namespace RoguelikeVR.AI
 
         #region Properties
 		
+        public bool IsActive { get; private set; }
+
         #endregion
 
         [ContextMenu("Test")]
@@ -56,9 +58,31 @@ namespace RoguelikeVR.AI
         public void SetShootingTarget(TargetPoint targetPoint)
         {
             this.targetPoint = targetPoint;
-            StopAllCoroutines();
-            StartCoroutine(MoveRoutine());
-            StartCoroutine(ShootRoutine());
+            aiBase.WeaponHolder.WeaponTargeter.TargetPoint = targetPoint;
+            SetActive(true);
+        }
+
+        public void SetActive(bool isActive)
+        {
+            IsActive = isActive;
+
+            if (isActive)
+            {
+                if (targetPoint != null)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(MoveRoutine());
+                    
+                    if (aiBase.WeaponHolder.Weapon != null)
+                    {
+                        StartCoroutine(ShootRoutine());
+                    }
+                }
+            }
+            else
+            {
+                StopAllCoroutines();
+            }
         }
 
         private IEnumerator MoveRoutine()
@@ -105,9 +129,8 @@ namespace RoguelikeVR.AI
             }
             else
             {
-                Vector3 randomInCircle = Random.insideUnitCircle * randomRunRadius;
-                randomInCircle.z = randomInCircle.y;
-                randomInCircle.y = transform.position.y;
+                Vector3 randomInCircle = Random.onUnitSphere * Random.Range(randomRunRadiusRange.x, randomRunRadiusRange.y);
+                randomInCircle.y = 0f;
                 movementPosition = transform.position + randomInCircle;
             }
         }

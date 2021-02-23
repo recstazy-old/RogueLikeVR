@@ -21,6 +21,7 @@ namespace RoguelikeVR.AI
         #region Properties
 
         public WeaponHolder WeaponHolder { get => weaponHolder; }
+        public PhysicsMovementBase Movement => movement;
 
         #endregion
 

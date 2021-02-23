@@ -20,20 +20,30 @@ namespace RoguelikeVR.PhysicsCharacters
         [SerializeField]
         private string directionZName;
 
+        private Vector3? lastPosition;
+        private Vector3? velocity;
+
         #endregion
 
         #region Properties
 
         #endregion
 
-        private void Update()
+        private void LateUpdate()
         {
-            if (body != null && animator != null)
+            if (lastPosition != null)
+            {
+                velocity = (transform.position - lastPosition) / Time.deltaTime;
+            }
+
+            if (velocity != null && body != null && animator != null)
             {
                 var velocityLocal = body.transform.InverseTransformVector(body.velocity);
                 animator.SetFloat(directionXName, velocityLocal.x);
                 animator.SetFloat(directionZName, velocityLocal.z);
             }
+
+            lastPosition = transform.position;
         }
     }
 }
