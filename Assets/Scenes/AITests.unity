@@ -359,6 +359,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2105273886315905718, guid: 32fe6600e37902846bec669394f2815a, type: 3}
   m_PrefabInstance: {fileID: 1538818679656510251}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1404924779 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 211492694, guid: 32fe6600e37902846bec669394f2815a, type: 3}
+  m_PrefabInstance: {fileID: 1538818679656510251}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1447083580 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 314361895, guid: 32fe6600e37902846bec669394f2815a, type: 3}
@@ -592,8 +603,20 @@ PrefabInstance:
       propertyPath: rotationSpeed
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 305890073, guid: 32fe6600e37902846bec669394f2815a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1140233340, guid: 32fe6600e37902846bec669394f2815a, type: 3}
       propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1460115221, guid: 32fe6600e37902846bec669394f2815a, type: 3}
+      propertyPath: builder
+      value: 
+      objectReference: {fileID: 1404924779}
+    - target: {fileID: 1824725984, guid: 32fe6600e37902846bec669394f2815a, type: 3}
+      propertyPath: connectedBody
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1538818679219164809, guid: 32fe6600e37902846bec669394f2815a, type: 3}
@@ -644,9 +667,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: AniPhysedRobot
       objectReference: {fileID: 0}
-    - target: {fileID: 2127216190176382879, guid: 32fe6600e37902846bec669394f2815a, type: 3}
-      propertyPath: targetPoint
-      value: 
-      objectReference: {fileID: 1223369117}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32fe6600e37902846bec669394f2815a, type: 3}

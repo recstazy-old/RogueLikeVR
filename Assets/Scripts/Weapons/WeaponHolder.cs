@@ -31,7 +31,10 @@ namespace RoguelikeVR.Weapons
 
         private void Start()
         {
-            SetWeapon(weapon);
+            if (weapon != null)
+            {
+                SetWeapon(weapon);
+            }
         }
 
         public void SetWeapon(Weapon newWeapon)

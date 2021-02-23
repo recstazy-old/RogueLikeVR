@@ -11,7 +11,11 @@ namespace RoguelikeVR.Weapons
         #region Fields
 
         [SerializeField]
+        [EditorReadOnly]
         private Weapon weapon;
+
+        [SerializeField]
+        private RigBuilder builder;
 
         [SerializeField]
         private TwoBoneIKConstraint rightIK;
@@ -59,7 +63,7 @@ namespace RoguelikeVR.Weapons
         private void ConfigureMainGrip(Weapon weapon)
         {
             weapon.MainGrip.SetIgnoreCollisions(rightHandCollider, true);
-            rightIK.weight = 1f;
+            SetWeight(rightIK, 1f);
             rightUpdater = weapon.MainGrip.gameObject.AddComponent<UpdateOtherOnFixedUpdate>();
             rightUpdater.Other = rightIK.data.target;
 
@@ -75,7 +79,7 @@ namespace RoguelikeVR.Weapons
 
         private void ReleaseMainGrip()
         {
-            rightIK.weight = 0f;
+            SetWeight(rightIK, 0f);
 
             if (rightUpdater != null)
             {
@@ -86,6 +90,13 @@ namespace RoguelikeVR.Weapons
             {
                 Destroy(rightJoint);
             }
+        }
+
+        private void SetWeight(TwoBoneIKConstraint ik, float weight)
+        {
+            builder.enabled = false;
+            ik.weight = weight;
+            builder.enabled = true;
         }
     }
 }
