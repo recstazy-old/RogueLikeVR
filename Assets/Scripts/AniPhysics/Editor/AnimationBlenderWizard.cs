@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using RoguelikeVR;
 
 namespace Recstazy.AniPhysics
 {
@@ -19,10 +20,10 @@ namespace Recstazy.AniPhysics
 		
         #endregion
 
-        [MenuItem("Tools/Open Blender Wizard")]
+        [MenuItem("Tools/Custom Wizards/Open Blender Wizard")]
         public static void OpenWindw()
         {
-            ScriptableWizard.DisplayWizard<AnimationBlenderWizard>("Physics animation wizard", "Create Bindings", "Create Components");
+            ScriptableWizard.DisplayWizard<AnimationBlenderWizard>("Physics animation wizard", "Create Bindings");
         }
 
         private void OnWizardCreate()
@@ -44,13 +45,7 @@ namespace Recstazy.AniPhysics
 
                 blender.Touples = touples.ToArray();
                 EditorUtility.SetDirty(blender);
-            }
-        }
 
-        private void OnWizardOtherButton()
-        {
-            if (blender != null)
-            {
                 blender.ExecuteSetupInEditor();
             }
         }
@@ -59,7 +54,7 @@ namespace Recstazy.AniPhysics
         {
             if (blender != null)
             {
-                var targetPath = GetBoneRelativeToRootPath(target, blender.TargetRootBone);
+                var targetPath = target.GetBoneRelativePath(blender.TargetRootBone);
 
                 if (targetPath != null)
                 {
@@ -71,25 +66,9 @@ namespace Recstazy.AniPhysics
             return null;
         }
 
-        private string GetBoneRelativeToRootPath(Transform bone, Transform root)
+        private void OnWizardUpdate()
         {
-            if (blender == null)
-            {
-                return null;
-            }
-
-            string result = bone.name;
-            var parent = bone.parent;
-            int i = 0;
-
-            while (parent != null && parent != root && i < 100)
-            {
-                result = parent.name + "/" + result;
-                parent = parent.parent;
-                i++;
-            }
-
-            return result;
+            helpString = "Select bones with Rigidbodies in ragdoll which you want to match with animation";
         }
     }
 }

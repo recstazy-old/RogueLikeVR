@@ -105,5 +105,21 @@ namespace RoguelikeVR
             float value = Random.Range(0f, 1f);
             return value <= chance;
         }
+
+        public static string GetBoneRelativePath(this Transform bone, Transform root)
+        {
+            string result = bone.name;
+            var parent = bone.parent;
+            int i = 0;
+
+            while (parent != null && parent != root && i < 100)
+            {
+                result = parent.name + "/" + result;
+                parent = parent.parent;
+                i++;
+            }
+
+            return result;
+        }
     }
 }

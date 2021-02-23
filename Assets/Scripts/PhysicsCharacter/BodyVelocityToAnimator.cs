@@ -20,6 +20,12 @@ namespace RoguelikeVR.PhysicsCharacters
         [SerializeField]
         private string directionZName;
 
+        [SerializeField]
+        private float movementTreshold;
+
+        [SerializeField]
+        private string isMovingName;
+
         private Vector3? lastPosition;
         private Vector3? velocity;
 
@@ -39,6 +45,8 @@ namespace RoguelikeVR.PhysicsCharacters
             if (velocity != null && body != null && animator != null)
             {
                 var velocityLocal = body.transform.InverseTransformVector(body.velocity);
+
+                animator.SetBool(isMovingName, velocityLocal.magnitude >= movementTreshold);
                 animator.SetFloat(directionXName, velocityLocal.x);
                 animator.SetFloat(directionZName, velocityLocal.z);
             }

@@ -78,7 +78,10 @@ namespace RoguelikeVR.AI
                 {
                     StopAllCoroutines();
                     StartCoroutine(MoveRoutine());
-                    
+
+                    var lookTransform = targetPoint ? targetPoint.transform : aiBase.Movement.NavAgent.transform;
+                    aiBase.LookAt(lookTransform);
+
                     if (aiBase.WeaponHolder.Weapon != null)
                     {
                         StartCoroutine(ShootRoutine());
@@ -96,7 +99,6 @@ namespace RoguelikeVR.AI
             while(targetPoint != null)
             {
                 yield return null;
-                aiBase.LookAt(targetPoint.transform);
                 FindMovementTarget();
                 aiBase.MoveTo(movementPosition);
                 yield return new WaitForSeconds(Random.Range(idleTimeRange.x, idleTimeRange.y));
