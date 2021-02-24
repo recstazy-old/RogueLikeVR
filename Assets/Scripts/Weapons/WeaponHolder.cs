@@ -13,9 +13,6 @@ namespace RoguelikeVR.Weapons
         private Weapon weapon;
 
         [SerializeField]
-        private BodyAttractor weaponAttractor;
-
-        [SerializeField]
         private WeaponIK weaponIK;
 
         [SerializeField]
@@ -41,10 +38,7 @@ namespace RoguelikeVR.Weapons
         public void SetWeapon(Weapon newWeapon)
         {
             weapon = newWeapon;
-            weaponAttractor.SetAttachedBody(newWeapon?.MainBody);
-
             weaponIK.SetWeapon(newWeapon);
-            weaponAttractor.Settings.Effector.SetEnabled(newWeapon != null);
             targeting.enabled = newWeapon != null;
         }
 

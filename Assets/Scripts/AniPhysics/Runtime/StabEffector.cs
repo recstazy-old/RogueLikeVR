@@ -41,8 +41,11 @@ namespace Recstazy.AniPhysics
 
         public void SetEnabled(bool isEnabled)
         {
-            StopAllCoroutines();
-            StartCoroutine(SmoothChangeRoutine(isEnabled));
+            if (gameObject.activeInHierarchy && enabled)
+            {
+                StopAllCoroutines();
+                StartCoroutine(SmoothChangeRoutine(isEnabled));
+            }
         }
 
         private IEnumerator SmoothChangeRoutine(bool enable)

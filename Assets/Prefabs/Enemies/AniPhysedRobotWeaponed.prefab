@@ -251,10 +251,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3663471124874076300, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: settings.maxAngularDrag
+      value: 1.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663471124874076300, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: settings.rotationStabSpeed
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3663471124908371065, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 2015785891712201189}
+    - target: {fileID: 3663471125299841645, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: settings.maxAngularDrag
+      value: 1.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663471125299841645, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: settings.rotationStabSpeed
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3663471125484918541, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
       propertyPath: m_MassScale
       value: 0.01
@@ -267,9 +283,25 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 7562263496961473536}
+    - target: {fileID: 3663471126511470715, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: mainHandIK
+      value: 
+      objectReference: {fileID: 9054616771292649670}
+    - target: {fileID: 3663471126511470715, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: mainHandCollider
+      value: 
+      objectReference: {fileID: 1454776847121102065}
     - target: {fileID: 3663471126532251985, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
       propertyPath: testTargetPoint
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663471126633691743, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: settings.positionStab
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663471126711246380, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: settings.positionStab
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3701273344856176305, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
       propertyPath: m_Layer
@@ -433,5 +465,21 @@ Transform:
 --- !u!95 &2015785891712201189 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6090754525007672662, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+  m_PrefabInstance: {fileID: 5728357100460999859}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9054616771292649670 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3663471125387664501, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+  m_PrefabInstance: {fileID: 5728357100460999859}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1454776847121102065 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 6579567446218059842, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
   m_PrefabInstance: {fileID: 5728357100460999859}
   m_PrefabAsset: {fileID: 0}

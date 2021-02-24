@@ -15,19 +15,29 @@ namespace RoguelikeVR.Weapons
         private Weapon weapon;
 
         [SerializeField]
+        private WeaponIKDoubler doublerPrefab;
+
+        [SerializeField]
+        private Transform doublerParent;
+
+        [SerializeField]
         private RigBuilder builder;
 
         [SerializeField]
-        private TwoBoneIKConstraint rightIK;
+        private TwoBoneIKConstraint mainHandIK;
 
         [SerializeField]
-        private Collider rightHandCollider;
+        private Collider mainHandCollider;
 
         [SerializeField]
-        private bool createJoints;
+        private Transform mainGripReferencePoint;
 
-        private UpdateOtherOnFixedUpdate rightUpdater;
-        private FixedJoint rightJoint;
+        [SerializeField]
+        private float jointMassScale;
+
+        private UpdateOtherOnFixedUpdate mainHandUpdater;
+        private FixedJoint mainHandJoint;
+        private WeaponIKDoubler doubler;
 
         #endregion
 
@@ -41,13 +51,14 @@ namespace RoguelikeVR.Weapons
             {
                 this.weapon = weapon;
                 weapon.MainBody.isKinematic = true;
+                CreateWeaponIKDoubler();
 
                 if (weapon.MainGrip != null)
                 {
                     ConfigureMainGrip(weapon);
                 }
 
-                this.WaitFramesAndRun(2, () => weapon.MainBody.isKinematic = false);
+                this.WaitFramesAndRun(1, () => weapon.MainBody.isKinematic = false);
             }
             else
             {
@@ -62,33 +73,34 @@ namespace RoguelikeVR.Weapons
 
         private void ConfigureMainGrip(Weapon weapon)
         {
-            weapon.MainGrip.SetIgnoreCollisions(rightHandCollider, true);
-            SetWeight(rightIK, 1f);
-            rightUpdater = weapon.MainGrip.gameObject.AddComponent<UpdateOtherOnFixedUpdate>();
-            rightUpdater.Other = rightIK.data.target;
+            weapon.MainGrip.SetIgnoreCollisions(mainHandCollider, true);
+            SetWeight(mainHandIK, 1f);
+            mainHandUpdater = doubler.MainGripPoint.gameObject.AddComponent<UpdateOtherOnFixedUpdate>();
+            mainHandUpdater.Other = mainHandIK.data.target;
 
-            if (createJoints)
-            {
-                this.WaitFramesAndRun(3, () =>
-                {
-                    rightJoint = rightHandCollider.gameObject.AddComponent<FixedJoint>();
-                    rightJoint.connectedBody = weapon.MainBody;
-                });
-            }
+            weapon.transform.rotation = Quaternion.identity;
+            weapon.transform.rotation *= mainHandCollider.transform.rotation * Quaternion.Inverse(weapon.MainGrip.transform.rotation);
+
+            var deltaPosition = mainHandCollider.transform.position - weapon.MainGrip.transform.position;
+            weapon.transform.position += deltaPosition;
+
+            mainHandJoint = mainHandCollider.gameObject.AddComponent<FixedJoint>();
+            mainHandJoint.massScale = jointMassScale;
+            mainHandJoint.connectedBody = weapon.MainBody;
         }
 
         private void ReleaseMainGrip()
         {
-            SetWeight(rightIK, 0f);
+            SetWeight(mainHandIK, 0f);
 
-            if (rightUpdater != null)
+            if (mainHandUpdater != null)
             {
-                Destroy(rightUpdater);
+                Destroy(mainHandUpdater);
             }
 
-            if (rightJoint != null)
+            if (mainHandJoint != null)
             {
-                Destroy(rightJoint);
+                Destroy(mainHandJoint);
             }
         }
 
@@ -97,6 +109,18 @@ namespace RoguelikeVR.Weapons
             builder.enabled = false;
             ik.weight = weight;
             builder.enabled = true;
+        }
+
+        private void CreateWeaponIKDoubler()
+        {
+            if (doubler != null)
+            {
+                Destroy(doubler.gameObject);
+            }
+
+            doubler = Instantiate(doublerPrefab);
+            doubler.Initialize(weapon, mainGripReferencePoint);
+            doubler.transform.SetParent(doublerParent);
         }
     }
 }
