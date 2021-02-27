@@ -288,9 +288,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9054616771292649670}
     - target: {fileID: 3663471126511470715, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: doublerParent
+      value: 
+      objectReference: {fileID: 4486505681999960186}
+    - target: {fileID: 3663471126511470715, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: doublerPrefab
+      value: 
+      objectReference: {fileID: 1869949972546071230, guid: e116c11f51e09ca4da8d98523335c5b9, type: 3}
+    - target: {fileID: 3663471126511470715, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: jointMassScale
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3663471126511470715, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
       propertyPath: mainHandCollider
       value: 
       objectReference: {fileID: 1454776847121102065}
+    - target: {fileID: 3663471126511470715, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+      propertyPath: mainGripReferencePoint
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3663471126532251985, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
       propertyPath: testTargetPoint
       value: 
@@ -478,6 +494,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &4486505681999960186 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8159523392827006153, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}
+  m_PrefabInstance: {fileID: 5728357100460999859}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &1454776847121102065 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 6579567446218059842, guid: 7c372541b5326b14a8edcc1e93ccbdd4, type: 3}

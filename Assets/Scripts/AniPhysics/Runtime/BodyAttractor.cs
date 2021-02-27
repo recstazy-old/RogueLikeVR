@@ -13,6 +13,9 @@ namespace Recstazy.AniPhysics
         private Rigidbody connectedBody;
 
         [SerializeField]
+        private float maxRotationAngle = 30f;
+
+        [SerializeField]
         private StabSettings settings;
 
         private float startDrag = 0f;
@@ -72,7 +75,7 @@ namespace Recstazy.AniPhysics
                 {
                     alpha = Time.fixedDeltaTime * Settings.RotationStabSpeed;
                     CurrentBody.angularVelocity = Vector3.Lerp(CurrentBody.angularVelocity, Vector3.zero, alpha);
-                    Quaternion rotation = Quaternion.RotateTowards(CurrentBody.rotation, transform.rotation, 30f);
+                    Quaternion rotation = Quaternion.RotateTowards(CurrentBody.rotation, transform.rotation, maxRotationAngle);
                     CurrentBody.MoveRotation(Quaternion.Slerp(CurrentBody.rotation, rotation, alpha));
                 }
             }

@@ -43,6 +43,8 @@ namespace RoguelikeVR.Weapons
 
         #region Properties
 
+        public WeaponIKDoubler WeaponDoubler => doubler;
+
         #endregion
 
         public void SetWeapon(Weapon weapon)

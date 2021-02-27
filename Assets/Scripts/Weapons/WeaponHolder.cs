@@ -18,6 +18,9 @@ namespace RoguelikeVR.Weapons
         [SerializeField]
         private WeaponTargeting targeting;
 
+        [SerializeField]
+        private BodyAttractor weaponAttractor;
+
         #endregion
 
         #region Properties
@@ -39,6 +42,8 @@ namespace RoguelikeVR.Weapons
         {
             weapon = newWeapon;
             weaponIK.SetWeapon(newWeapon);
+            weaponAttractor.transform.localPosition = weaponIK.WeaponDoubler.transform.localPosition;
+            weaponAttractor.SetAttachedBody(weapon?.MainBody);
             targeting.enabled = newWeapon != null;
         }
 

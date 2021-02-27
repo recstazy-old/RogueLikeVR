@@ -55,6 +55,12 @@ namespace RoguelikeVR.AI
 
         #endregion
 
+        private IEnumerator Start()
+        {
+            yield return new WaitForSeconds(1f);
+            Test();
+        }
+
         [ContextMenu("Test")]
         public void Test()
         {
