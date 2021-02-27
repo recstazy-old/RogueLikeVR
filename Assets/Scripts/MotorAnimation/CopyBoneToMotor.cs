@@ -15,16 +15,10 @@ namespace RoguelikeVR
         private Transform reference;
 
         [SerializeField]
-        private bool inverseRotation = true;
-
-        [SerializeField]
         private bool copyRotation = true;
 
         [SerializeField]
         private bool copyPosition = true;
-
-        [SerializeField]
-        private bool inversePosition = true;
 
         private Vector3 startPosition;
         private Quaternion startRotation;
@@ -48,16 +42,18 @@ namespace RoguelikeVR
         {
             if (joint != null && reference != null)
             {
+                // Because you need to invert position and rotation before give it to joint
+                // And you need this pose be relative to bone start pose (which is not 0, 0, 0 in skeleton) instead of bone local pose as well
+
                 if (copyPosition)
                 {
-                    var newPosition = inversePosition ? -reference.localPosition : reference.localPosition;
-                    joint.targetPosition = newPosition - (inversePosition ? -startPosition : startPosition);
+                    joint.targetPosition = -(reference.localPosition - startPosition);
                 }
 
                 if (copyRotation)
                 {
-                    Quaternion newRotation = inverseRotation ? Quaternion.Inverse(reference.localRotation) : reference.localRotation;
-                    joint.targetRotation = newRotation * Quaternion.Inverse(inverseRotation ? Quaternion.Inverse(startRotation) : startRotation);
+                    // This is Inverse(reference.localRotation * Inverse(startRotation))
+                    joint.targetRotation = Quaternion.Inverse(reference.localRotation) * startRotation;
                 }
             }
         }

@@ -169,10 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 7956950506762556835}
   reference: {fileID: 80672988}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &133282844
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,10 +309,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 4498591615811723810}
   reference: {fileID: 222402133}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &294300013
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,10 +894,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 4690915477659423915}
   reference: {fileID: 719536632}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &721756513
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,10 +1041,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 3049778280475404782}
   reference: {fileID: 747213538}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &780650727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,10 +1151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 1597826233718268520}
   reference: {fileID: 810995762}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &832176013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,10 +1445,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 8053755579701190623}
   reference: {fileID: 957497742}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &967893895
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,10 +1647,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 8319526861101458246}
   reference: {fileID: 1023475804}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &1025066165
 GameObject:
   m_ObjectHideFlags: 0
@@ -1800,10 +1786,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 2521683567413359979}
   reference: {fileID: 1122670308}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &1148365313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,10 +1900,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 1960962054850772524}
   reference: {fileID: 1180740562}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 1
-  inversePosition: 1
 --- !u!1 &1226797221
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,10 +2213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 6335612516227009898}
   reference: {fileID: 1539471720}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &1566026182
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,10 +2261,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 4591063555622218253}
   reference: {fileID: 1566026183}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &1571341242
 GameObject:
   m_ObjectHideFlags: 0
@@ -2331,10 +2309,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 8584704040189207702}
   reference: {fileID: 1571341243}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &1646913495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,9 +2385,9 @@ Animator:
   m_GameObject: {fileID: 1712806991}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3661ec013b904c841a36c5cb7ffd337c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 16487bcfc429096459c04a1ded2259c5, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -2559,10 +2535,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 3574764382615014689}
   reference: {fileID: 1790118750}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &1830558000
 GameObject:
   m_ObjectHideFlags: 0
@@ -2896,10 +2870,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 7035049639511500979}
   reference: {fileID: 2049219381}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &2120233391
 GameObject:
   m_ObjectHideFlags: 0
@@ -2946,10 +2918,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joint: {fileID: 7572940689331997735}
   reference: {fileID: 2120233392}
-  inverseRotation: 1
   copyRotation: 1
   copyPosition: 0
-  inversePosition: 1
 --- !u!1 &2127504204
 GameObject:
   m_ObjectHideFlags: 0
