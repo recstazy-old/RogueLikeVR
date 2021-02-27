@@ -15,10 +15,19 @@ namespace RoguelikeVR
         private Transform reference;
 
         [SerializeField]
+        private bool inverseRotation = true;
+
+        [SerializeField]
         private bool copyRotation = true;
 
         [SerializeField]
         private bool copyPosition = true;
+
+        [SerializeField]
+        private bool inversePosition = true;
+
+        private Vector3 startPosition;
+        private Quaternion startRotation;
 
         #endregion
 
@@ -29,16 +38,27 @@ namespace RoguelikeVR
 
         #endregion
 
+        private void Awake()
+        {
+            startPosition = reference.localPosition;
+            startRotation = reference.localRotation;
+        }
+
         private void FixedUpdate()
         {
-            if (copyPosition)
+            if (joint != null && reference != null)
             {
-                joint.targetPosition = reference.localPosition;
-            }
+                if (copyPosition)
+                {
+                    var newPosition = inversePosition ? -reference.localPosition : reference.localPosition;
+                    joint.targetPosition = newPosition - (inversePosition ? -startPosition : startPosition);
+                }
 
-            if (copyRotation)
-            {
-                joint.targetRotation = Quaternion.Inverse(reference.localRotation);
+                if (copyRotation)
+                {
+                    Quaternion newRotation = inverseRotation ? Quaternion.Inverse(reference.localRotation) : reference.localRotation;
+                    joint.targetRotation = newRotation * Quaternion.Inverse(inverseRotation ? Quaternion.Inverse(startRotation) : startRotation);
+                }
             }
         }
     }
