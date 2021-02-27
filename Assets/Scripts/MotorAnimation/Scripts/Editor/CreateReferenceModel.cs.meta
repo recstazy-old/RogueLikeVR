@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: fc8a6aaac6a95d34ca02c5c7e5978d92
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - root: {instanceID: 0}
+  - replaceMaterial: {fileID: 2100000, guid: 9e8490e06d5c053439e37e71801cc7ce, type: 2}
+  - addAnimator: {instanceID: 0}
+  - rootJointPrefab: {fileID: 854226170127837557, guid: 75ed19283bc7fe24a8e84fa98d7eb2c4, type: 3}
+  - referenceRootPrefab: {fileID: 4166706739503932724, guid: 1be08537580f33d40a8b7bfe6c595705, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
