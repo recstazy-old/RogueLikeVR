@@ -2187,6 +2187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startBlend: 1
+  blendTime: 0.25
   leftHandCollider: {fileID: 6328926865890346272}
   rightHandCollider: {fileID: 5483762599853990371}
   leftFootCollider: {fileID: 2532397837895220295}

@@ -50,6 +50,7 @@ namespace RoguelikeVR
             joint.angularXDrive = BlendDrives(zeroDrive, defaultSettings.AngularX, blend);
             joint.angularYZDrive = BlendDrives(zeroDrive, defaultSettings.AngularYZ, blend);
 
+            joint.massScale = Mathf.Lerp(1f, defaultSettings.MassScale, blend);
             joint.connectedMassScale = Mathf.Lerp(1f, defaultSettings.ConnectedMassScale, blend);
         }
 
