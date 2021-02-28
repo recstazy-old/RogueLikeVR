@@ -22,9 +22,6 @@ namespace RoguelikeVR
         private Material replaceMaterial;
 
         [SerializeField]
-        private ConfigurableJoint rootJointPrefab;
-
-        [SerializeField]
         private Rigidbody referenceRootPrefab;
 
         #endregion
@@ -72,6 +69,30 @@ namespace RoguelikeVR
                 var componentGameobject = c.gameObject;
                 DestroyImmediate(c);
                 EditorUtility.SetDirty(componentGameobject);
+            }
+
+            var customBehaviours = refRoot.GetComponentsInChildren<DriveBlend>()
+                .Select(b => b as MonoBehaviour)
+                .Concat(new MonoBehaviour[] { refRoot.GetComponentInChildren<RagdollCharacter>() })
+                .Concat(new MonoBehaviour[] { refRoot.GetComponentInChildren<BodyAngularBrake>() });
+
+            foreach (var b in customBehaviours)
+            {
+                if (b != null)
+                {
+                    var gObject = b.gameObject;
+                    DestroyImmediate(b);
+                    EditorUtility.SetDirty(gObject);
+                }
+            }
+
+            var blendGroup = refRoot.GetComponentInChildren<BlendGroup>();
+
+            if (blendGroup != null)
+            {
+                var parent = blendGroup.transform.parent.parent;
+                DestroyImmediate(blendGroup.transform.parent.gameObject);
+                EditorUtility.SetDirty(parent);
             }
 
             return refRoot;
@@ -143,10 +164,7 @@ namespace RoguelikeVR
         private DriveAnimator CreateDriveAnimator(Transform refRoot)
         {
             var driveAnimator = refRoot.gameObject.AddComponent<DriveAnimator>();
-            var globalBlend = refRoot.gameObject.AddComponent<DriveBlend>();
-            driveAnimator.GlobalBlend = globalBlend;
             EditorUtility.SetDirty(driveAnimator);
-            EditorUtility.SetDirty(globalBlend);
             return driveAnimator;
         }
 
@@ -154,19 +172,15 @@ namespace RoguelikeVR
         {
             var newRootInstance = Instantiate(referenceRootPrefab, refRoot.position, refRoot.rotation, refRoot.parent);
             refRoot.transform.SetParent(newRootInstance.transform);
-            var ignoreCollision = newRootInstance.GetComponentInChildren<IgnoreCollisionWithGameObject>();
-            ignoreCollision.Target = refRoot.gameObject;
             var velocityToAnimtor = newRootInstance.GetComponentInChildren<BodyVelocityToAnimator>();
             velocityToAnimtor.Animator = animator;
 
-            UnityEditorInternal.ComponentUtility.CopyComponent(rootJointPrefab);
-            UnityEditorInternal.ComponentUtility.PasteComponentAsNew(ragdollRoot.gameObject);
-            var joint = ragdollRoot.GetComponent<ConfigurableJoint>().connectedBody = newRootInstance;
+            var joint = newRootInstance.GetComponent<Joint>();
+            joint.connectedBody = ragdollRoot.GetComponent<Rigidbody>();
 
             EditorUtility.SetDirty(newRootInstance.gameObject);
             EditorUtility.SetDirty(joint);
             EditorUtility.SetDirty(refRoot);
-            EditorUtility.SetDirty(ignoreCollision);
             EditorUtility.SetDirty(velocityToAnimtor);
         }
 

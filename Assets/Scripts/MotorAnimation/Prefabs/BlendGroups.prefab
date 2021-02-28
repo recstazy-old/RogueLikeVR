@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 332368915527233101}
-  - component: {fileID: 332368915527233106}
+  - component: {fileID: 8880681749738832310}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 332368915677182154}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &332368915527233106
+--- !u!114 &8880681749738832310
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,11 +40,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 332368915527233100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f3296a8774da8d46a303b1342a3dd40, type: 3}
+  m_Script: {fileID: 11500000, guid: dbef13f8c85ebf845abd6894469a66c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blend: 1
-  globalBlend: {fileID: 0}
+  value: 1
 --- !u!1 &332368915677182149
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 332368915995370169}
-  - component: {fileID: 332368915995370174}
+  - component: {fileID: 4916540971727747386}
   m_Layer: 0
   m_Name: Arms
   m_TagString: Untagged
@@ -111,7 +110,7 @@ Transform:
   m_Father: {fileID: 332368915677182154}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &332368915995370174
+--- !u!114 &4916540971727747386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,11 +119,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 332368915995370168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f3296a8774da8d46a303b1342a3dd40, type: 3}
+  m_Script: {fileID: 11500000, guid: dbef13f8c85ebf845abd6894469a66c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blend: 1
-  globalBlend: {fileID: 0}
+  value: 1
 --- !u!1 &332368916297759967
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 332368916297759964}
-  - component: {fileID: 332368916297759965}
+  - component: {fileID: 7065766232670545109}
   m_Layer: 0
   m_Name: Legs
   m_TagString: Untagged
@@ -156,7 +154,7 @@ Transform:
   m_Father: {fileID: 332368915677182154}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &332368916297759965
+--- !u!114 &7065766232670545109
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,11 +163,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 332368916297759967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f3296a8774da8d46a303b1342a3dd40, type: 3}
+  m_Script: {fileID: 11500000, guid: dbef13f8c85ebf845abd6894469a66c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blend: 1
-  globalBlend: {fileID: 0}
+  value: 1
 --- !u!1 &332368917186741080
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 332368917186741081}
-  - component: {fileID: 332368917186741086}
+  - component: {fileID: 8100290550939228956}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -201,7 +198,7 @@ Transform:
   m_Father: {fileID: 332368915677182154}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &332368917186741086
+--- !u!114 &8100290550939228956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,11 +207,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 332368917186741080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f3296a8774da8d46a303b1342a3dd40, type: 3}
+  m_Script: {fileID: 11500000, guid: dbef13f8c85ebf845abd6894469a66c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blend: 1
-  globalBlend: {fileID: 0}
+  value: 1
 --- !u!1 &332368917279790890
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 332368917279790891}
-  - component: {fileID: 332368917279790888}
+  - component: {fileID: 6807041375177965389}
   m_Layer: 0
   m_Name: Hips
   m_TagString: Untagged
@@ -246,7 +242,7 @@ Transform:
   m_Father: {fileID: 332368915677182154}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &332368917279790888
+--- !u!114 &6807041375177965389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -255,8 +251,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 332368917279790890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f3296a8774da8d46a303b1342a3dd40, type: 3}
+  m_Script: {fileID: 11500000, guid: dbef13f8c85ebf845abd6894469a66c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blend: 1
-  globalBlend: {fileID: 0}
+  value: 1

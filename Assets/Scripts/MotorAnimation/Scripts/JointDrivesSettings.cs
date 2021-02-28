@@ -24,6 +24,9 @@ namespace RoguelikeVR
         [SerializeField]
         private JointDrive angularYZ;
 
+        [SerializeField]
+        private float connectedMassScale;
+
         #endregion
 
         #region Properties
@@ -33,6 +36,7 @@ namespace RoguelikeVR
         public JointDrive LinearZ { get => linearZ; set => linearZ = value; }
         public JointDrive AngularX { get => angularX; set => angularX = value; }
         public JointDrive AngularYZ { get => angularYZ; set => angularYZ = value; }
+        public float ConnectedMassScale { get => connectedMassScale; set => connectedMassScale = value; }
 
         #endregion
 
@@ -43,6 +47,7 @@ namespace RoguelikeVR
             linearZ = joint.zDrive;
             angularX = joint.angularXDrive;
             angularYZ = joint.angularYZDrive;
+            connectedMassScale = joint.connectedMassScale;
         }
     }
 }
