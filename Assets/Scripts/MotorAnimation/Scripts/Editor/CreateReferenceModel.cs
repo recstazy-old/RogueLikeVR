@@ -58,6 +58,7 @@ namespace RoguelikeVR
         private Transform CreateReferenceRoot()
         {
             var refRoot = Instantiate(ragdollRoot.gameObject, ragdollRoot.transform.position, ragdollRoot.rotation, ragdollRoot.parent).transform;
+            refRoot.name = ragdollRoot.name + "_Reference";
 
             Component[] physicsComponents = refRoot.GetComponentsInChildren<Joint>(true).Select(b => b as Component)
                 .Concat(refRoot.GetComponentsInChildren<Rigidbody>(true))
@@ -93,6 +94,15 @@ namespace RoguelikeVR
                 var parent = blendGroup.transform.parent.parent;
                 DestroyImmediate(blendGroup.transform.parent.gameObject);
                 EditorUtility.SetDirty(parent);
+            }
+
+            var ignoreCollisions = refRoot.GetComponentsInChildren<IgnoreCollisionWithGameObject>();
+
+            foreach (var i in ignoreCollisions)
+            {
+                var gObject = i.gameObject;
+                DestroyImmediate(i);
+                EditorUtility.SetDirty(gObject);
             }
 
             return refRoot;

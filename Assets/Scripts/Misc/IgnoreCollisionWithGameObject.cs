@@ -25,11 +25,15 @@ namespace RoguelikeVR
         private void Awake()
         {
             var thisCollider = GetComponent<Collider>();
-            var others = target.GetComponentsInChildren<Collider>();
 
-            foreach (var o in others)
+            if (thisCollider != null)
             {
-                Physics.IgnoreCollision(o, thisCollider, ignore);
+                var others = target.GetComponentsInChildren<Collider>();
+
+                foreach (var o in others)
+                {
+                    Physics.IgnoreCollision(o, thisCollider, ignore);
+                }
             }
         }
     }

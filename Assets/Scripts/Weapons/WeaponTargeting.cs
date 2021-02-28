@@ -14,6 +14,9 @@ namespace RoguelikeVR.Weapons
         [SerializeField]
         private TargetPoint targetPoint;
 
+        [SerializeField]
+        private float lookingConeAngle;
+
         #endregion
 
         #region Properties
@@ -26,7 +29,17 @@ namespace RoguelikeVR.Weapons
         {
             if (weaponPose != null && TargetPoint != null)
             {
-                weaponPose.LookAt(TargetPoint.transform);
+                var delta = TargetPoint.transform.position - weaponPose.position;
+                var angle = Vector3.Angle(delta.normalized, transform.forward);
+
+                if (angle < lookingConeAngle)
+                {
+                    weaponPose.LookAt(TargetPoint.transform);
+                }
+                else
+                {
+                    weaponPose.transform.localRotation = Quaternion.identity;
+                }
             }
         }
     }

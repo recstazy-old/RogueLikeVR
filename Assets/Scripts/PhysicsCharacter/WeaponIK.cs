@@ -19,16 +19,7 @@ namespace RoguelikeVR.Weapons
 
         [SerializeField]
         private Transform doublerParent;
-
-        [SerializeField]
-        private RigBuilder builder;
-
-        [SerializeField]
-        private TwoBoneIKConstraint mainHandIK;
-
-        [SerializeField]
-        private Collider mainHandCollider;
-
+        
         [SerializeField]
         private Transform mainGripReferencePoint;
 
@@ -39,13 +30,25 @@ namespace RoguelikeVR.Weapons
         private FixedJoint mainHandJoint;
         private WeaponIKDoubler doubler;
 
+        private RigBuilder builder;
+        private TwoBoneIKConstraint mainHandIK;
+        private Collider mainHandCollider;
+
         #endregion
 
         #region Properties
 
         public WeaponIKDoubler WeaponDoubler => doubler;
+        public bool Initialized => builder != null && mainHandIK != null;
 
         #endregion
+
+        public void Initialize(RigBuilder builder, TwoBoneIKConstraint mainHandIK, Collider mainHandCollider)
+        {
+            this.builder = builder;
+            this.mainHandIK = mainHandIK;
+            this.mainHandCollider = mainHandCollider;
+        }
 
         public void SetWeapon(Weapon weapon)
         {
@@ -59,6 +62,8 @@ namespace RoguelikeVR.Weapons
                 {
                     ConfigureMainGrip(weapon);
                 }
+
+                Debug.Break();
 
                 this.WaitFramesAndRun(1, () => weapon.MainBody.isKinematic = false);
             }
@@ -75,34 +80,40 @@ namespace RoguelikeVR.Weapons
 
         private void ConfigureMainGrip(Weapon weapon)
         {
-            weapon.MainGrip.SetIgnoreCollisions(mainHandCollider, true);
-            SetWeight(mainHandIK, 1f);
-            mainHandUpdater = doubler.MainGripPoint.gameObject.AddComponent<UpdateOtherOnFixedUpdate>();
-            mainHandUpdater.Other = mainHandIK.data.target;
+            if (Initialized)
+            {
+                weapon.MainGrip.SetIgnoreCollisions(mainHandCollider, true);
+                SetWeight(mainHandIK, 1f);
+                mainHandUpdater = doubler.MainGripPoint.gameObject.AddComponent<UpdateOtherOnFixedUpdate>();
+                mainHandUpdater.Other = mainHandIK.data.target;
 
-            weapon.transform.rotation = Quaternion.identity;
-            weapon.transform.rotation *= mainHandCollider.transform.rotation * Quaternion.Inverse(weapon.MainGrip.transform.rotation);
+                weapon.transform.rotation = Quaternion.identity;
+                weapon.transform.rotation *= mainHandCollider.transform.rotation * Quaternion.Inverse(weapon.MainGrip.transform.rotation);
 
-            var deltaPosition = mainHandCollider.transform.position - weapon.MainGrip.transform.position;
-            weapon.transform.position += deltaPosition;
+                var deltaPosition = mainHandCollider.transform.position - weapon.MainGrip.transform.position;
+                weapon.transform.position += deltaPosition;
 
-            mainHandJoint = mainHandCollider.gameObject.AddComponent<FixedJoint>();
-            mainHandJoint.massScale = jointMassScale;
-            mainHandJoint.connectedBody = weapon.MainBody;
+                mainHandJoint = mainHandCollider.gameObject.AddComponent<FixedJoint>();
+                mainHandJoint.massScale = jointMassScale;
+                mainHandJoint.connectedBody = weapon.MainBody;
+            }
         }
 
         private void ReleaseMainGrip()
         {
-            SetWeight(mainHandIK, 0f);
-
-            if (mainHandUpdater != null)
+            if (Initialized)
             {
-                Destroy(mainHandUpdater);
-            }
+                SetWeight(mainHandIK, 0f);
 
-            if (mainHandJoint != null)
-            {
-                Destroy(mainHandJoint);
+                if (mainHandUpdater != null)
+                {
+                    Destroy(mainHandUpdater);
+                }
+
+                if (mainHandJoint != null)
+                {
+                    Destroy(mainHandJoint);
+                }
             }
         }
 

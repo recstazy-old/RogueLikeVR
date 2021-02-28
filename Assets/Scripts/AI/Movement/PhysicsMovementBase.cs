@@ -22,39 +22,49 @@ namespace RoguelikeVR.AI
         private bool canMoveonStart;
 
         private IPhysicsMovement movementImplementation;
+        private bool initialized;
 
         #endregion
 
         #region Properties
 
-        public Rigidbody Body => body;
         public NavMeshAgent NavAgent => navAgent;
         public float NavAgentWaitDistance { get => navAgentWaitDistance; set => navAgentWaitDistance = value; }
         public bool CanMove { get; private set; }
+        public Rigidbody Body { get => body; set => body = value; }
 
         #endregion
 
+        public void Initialize()
+        {
+            if (!initialized)
+            {
+                initialized = true;
+                movementImplementation = GetComponent<IPhysicsMovement>();
+
+                if (navAgent != null)
+                {
+                    navAgent.gameObject.name = Body.gameObject.name + "_NavAgent";
+                    navAgent.transform.SetParent(Body.transform.parent);
+                }
+
+                SetCanMove(canMoveonStart);
+            }
+        }
+
         private void Start()
         {
-            movementImplementation = GetComponent<IPhysicsMovement>();
-
-            if (navAgent != null)
-            {
-                navAgent.gameObject.name = body.gameObject.name + "_NavAgent";
-                navAgent.transform.SetParent(body.transform.parent);
-            }
-
-            SetCanMove(canMoveonStart);
+            Initialize();
         }
 
         private void FixedUpdate()
         {
             if (CanMove)
             {
-                if (body != null && navAgent != null)
+                if (Body != null && navAgent != null)
                 {
-                    navAgent.isStopped = Vector3.Distance(body.position, navAgent.transform.position) > navAgentWaitDistance;
-                    movementImplementation?.MoveBody(body, navAgent.transform);
+                    navAgent.isStopped = Vector3.Distance(Body.position, navAgent.transform.position) > navAgentWaitDistance;
+                    movementImplementation?.MoveBody(Body, navAgent.transform);
                 }
             }
         }
@@ -81,7 +91,7 @@ namespace RoguelikeVR.AI
         {
             navAgent.ResetPath();
             navAgent.isStopped = true;
-            navAgent.transform.position = body.position;
+            navAgent.transform.position = Body.position;
             navAgent.isStopped = false;
         }
 
@@ -98,7 +108,7 @@ namespace RoguelikeVR.AI
         {
             if (movementImplementation is IPhysicsLookAt)
             {
-                (movementImplementation as IPhysicsLookAt)?.MoveBodyRotation(body, target);
+                (movementImplementation as IPhysicsLookAt)?.MoveBodyRotation(Body, target);
             }
         }
     }

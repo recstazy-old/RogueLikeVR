@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colliders:
+  - {fileID: 7112049260813085709}
   - {fileID: 7112049261040956617}
 --- !u!1 &7112049260813085707
 GameObject:

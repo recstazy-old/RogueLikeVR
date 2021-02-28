@@ -2,12 +2,11 @@ using RoguelikeVR.Weapons;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 
 namespace RoguelikeVR.AI
 {
-    public class ShootingRobotAI : MonoBehaviour
+    public class ShootingRobotAI : MonoBehaviour, ITargetPointReciever
     {
         #region Fields
 
@@ -15,25 +14,10 @@ namespace RoguelikeVR.AI
         private AIBase aiBase;
 
         [SerializeField]
-        private TargetPoint testTargetPoint;
-
-        [SerializeField]
-        private float obstacleStopDistance;
-
-        [SerializeField]
-        private float hideChance = 0.25f;
-
-        [SerializeField]
         private Vector2 idleTimeRange;
 
         [SerializeField]
         private Vector2 randomRunRadiusRange;
-
-        [SerializeField]
-        private Transform headPose;
-
-        [SerializeField]
-        private LayerMask obstacleMask = -1;
 
         [SerializeField]
         private Vector2 shootIdleRange;
@@ -55,16 +39,9 @@ namespace RoguelikeVR.AI
 
         #endregion
 
-        private IEnumerator Start()
+        public void SetTargetPoint(TargetPoint point)
         {
-            yield return new WaitForSeconds(1f);
-            Test();
-        }
-
-        [ContextMenu("Test")]
-        public void Test()
-        {
-            SetShootingTarget(testTargetPoint);
+            SetShootingTarget(point);
         }
 
         public void SetShootingTarget(TargetPoint targetPoint)
@@ -132,22 +109,6 @@ namespace RoguelikeVR.AI
 
         private void FindMovementTarget()
         {
-            bool willTryHide = hideChance.RandomBoolChance();
-
-            if (willTryHide)
-            {
-                var direction = targetPoint.transform.position - headPose.position;
-                var ray = new Ray(headPose.position, direction.normalized);
-                var hits = Physics.RaycastAll(ray, direction.magnitude, obstacleMask, QueryTriggerInteraction.Ignore);
-
-                if (hits.Length > 0)
-                {
-                    var closest = hits.OrderBy(h => h.distance).FirstOrDefault();
-                    movementPosition = closest.point + closest.normal * obstacleStopDistance;
-                    return;
-                }
-            }
-
             Vector3 randomInCircle = Random.onUnitSphere * Random.Range(randomRunRadiusRange.x, randomRunRadiusRange.y);
             randomInCircle.y = 0f;
             movementPosition = transform.position + randomInCircle;

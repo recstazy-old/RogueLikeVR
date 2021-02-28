@@ -1,11 +1,12 @@
 using Recstazy.AniPhysics;
+using RoguelikeVR.AI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace RoguelikeVR.Weapons
 {
-    public class WeaponHolder : MonoBehaviour
+    public class WeaponHolder : MonoBehaviour, IWeaponReciever
     {
         #region Fields
 
@@ -18,9 +19,6 @@ namespace RoguelikeVR.Weapons
         [SerializeField]
         private WeaponTargeting targeting;
 
-        [SerializeField]
-        private BodyAttractor weaponAttractor;
-
         #endregion
 
         #region Properties
@@ -30,20 +28,10 @@ namespace RoguelikeVR.Weapons
 
         #endregion
 
-        private void Start()
-        {
-            if (weapon != null)
-            {
-                SetWeapon(weapon);
-            }
-        }
-
         public void SetWeapon(Weapon newWeapon)
         {
             weapon = newWeapon;
             weaponIK.SetWeapon(newWeapon);
-            weaponAttractor.transform.localPosition = weaponIK.WeaponDoubler.transform.localPosition;
-            weaponAttractor.SetAttachedBody(weapon?.MainBody);
             targeting.enabled = newWeapon != null;
         }
 
