@@ -60,7 +60,7 @@ namespace RoguelikeVR.AI
                 if (targetPoint != null)
                 {
                     StopAllCoroutines();
-                    StartCoroutine(MoveRoutine());
+                    //StartCoroutine(MoveRoutine());
 
                     var lookTransform = targetPoint ? targetPoint.transform : aiBase.Movement.NavAgent.transform;
                     aiBase.LookAt(lookTransform);

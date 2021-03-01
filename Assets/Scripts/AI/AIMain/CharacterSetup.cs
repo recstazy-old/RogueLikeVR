@@ -23,6 +23,9 @@ namespace RoguelikeVR.AI
         private TwoBoneIKConstraint mainHandIK;
 
         [SerializeField]
+        private TwoBoneIKConstraint secondaryIK;
+
+        [SerializeField]
         private Weapon weapon;
 
         [SerializeField]
@@ -59,7 +62,7 @@ namespace RoguelikeVR.AI
 
             if (weaponIK != null)
             {
-                weaponIK.Initialize(rigBuilder, mainHandIK, ragdoll.RightHandCollider);
+                weaponIK.Initialize(rigBuilder, mainHandIK, ragdoll.RightHandCollider, secondaryIK, ragdoll.LeftHandCollider);
             }
 
             if (weaponReciever != null)

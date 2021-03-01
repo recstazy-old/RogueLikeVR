@@ -13,6 +13,9 @@ namespace RoguelikeVR
         private Transform mainGripPoint;
 
         [SerializeField]
+        private Transform secondaryGrip;
+
+        [SerializeField]
         private bool createGhost;
 
         #endregion
@@ -20,51 +23,63 @@ namespace RoguelikeVR
         #region Properties
 
         public Transform MainGripPoint => mainGripPoint;
+        public Transform SecondaryGrip => secondaryGrip;
 
         #endregion
 
         public void Initialize(Weapon weapon, Transform mainGripReferencePoint)
         {
-            SetupTransforms(weapon, mainGripReferencePoint);
+            transform.SetPositionAndRotation(weapon.transform.position, weapon.transform.rotation);
+            mainGripPoint.transform.SetPositionAndRotation(weapon.MainGrip.transform.position, weapon.MainGrip.transform.rotation);
+
+            SetupTransform(mainGripReferencePoint);
+            CreateTestVisual(weapon);
         }
 
-        private void SetupTransforms(Weapon weapon, Transform mainGripReference)
+        public void Initialize(Weapon weapon, Transform mainGripReferencePoint, int secondaryGripIndex)
         {
             transform.SetPositionAndRotation(weapon.transform.position, weapon.transform.rotation);
             mainGripPoint.transform.SetPositionAndRotation(weapon.MainGrip.transform.position, weapon.MainGrip.transform.rotation);
 
+            var secondaryGrip = weapon.SecondaryGripPoints[secondaryGripIndex];
+            SecondaryGrip.transform.SetPositionAndRotation(secondaryGrip.transform.position, secondaryGrip.transform.rotation);
+
+            SetupTransform(mainGripReferencePoint);
+            CreateTestVisual(weapon);
+        }
+
+        private void SetupTransform(Transform mainGripReference)
+        {
             transform.rotation = mainGripReference.transform.rotation;
             var deltaPosition = mainGripReference.transform.position - mainGripPoint.transform.position;
             transform.position += deltaPosition;
-
-            if (createGhost)
-            {
-                CreateTestVisual(weapon);
-            }
         }
 
         private void CreateTestVisual(Weapon weapon)
         {
-            var visual = weapon.transform.GetChild(0).gameObject;
-            var newVisual = Instantiate(visual);
-
-            var colliders = newVisual.GetComponentsInChildren<Collider>();
-
-            foreach (var c in colliders)
+            if (createGhost)
             {
-                Destroy(c);
-            }
+                var visual = weapon.transform.GetChild(0).gameObject;
+                var newVisual = Instantiate(visual);
 
-            newVisual.transform.SetParent(transform);
-            newVisual.transform.localPosition = visual.transform.localPosition;
-            newVisual.transform.localRotation = visual.transform.localRotation;
+                var colliders = newVisual.GetComponentsInChildren<Collider>();
 
-            var renderers = newVisual.GetComponentsInChildren<MeshRenderer>();
-            var material = Resources.Load<Material>("Ghost");
+                foreach (var c in colliders)
+                {
+                    Destroy(c);
+                }
 
-            foreach (var renderer in renderers)
-            {
-                renderer.material = material;
+                newVisual.transform.SetParent(transform);
+                newVisual.transform.localPosition = visual.transform.localPosition;
+                newVisual.transform.localRotation = visual.transform.localRotation;
+
+                var renderers = newVisual.GetComponentsInChildren<MeshRenderer>();
+                var material = Resources.Load<Material>("Ghost");
+
+                foreach (var renderer in renderers)
+                {
+                    renderer.material = material;
+                }
             }
         }
     }

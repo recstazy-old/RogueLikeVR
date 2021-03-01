@@ -26,13 +26,19 @@ namespace RoguelikeVR.Weapons
         [SerializeField]
         private float jointMassScale;
 
-        private UpdateOtherOnFixedUpdate mainHandUpdater;
-        private FixedJoint mainHandJoint;
+        private RigBuilder builder;
         private WeaponIKDoubler doubler;
 
-        private RigBuilder builder;
+        private UpdateOtherOnFixedUpdate mainHandUpdater;
         private TwoBoneIKConstraint mainHandIK;
         private Collider mainHandCollider;
+        private FixedJoint mainHandJoint;
+
+        private UpdateOtherOnFixedUpdate secondaryUpdater;
+        private TwoBoneIKConstraint secondaryIK;
+        private Collider secondaryCollider;
+        private FixedJoint secondaryHandJoint;
+        private int secondaryGripIndex = -1;
 
         #endregion
 
@@ -43,11 +49,13 @@ namespace RoguelikeVR.Weapons
 
         #endregion
 
-        public void Initialize(RigBuilder builder, TwoBoneIKConstraint mainHandIK, Collider mainHandCollider)
+        public void Initialize(RigBuilder builder, TwoBoneIKConstraint mainHandIK, Collider mainHandCollider, TwoBoneIKConstraint secondaryIK, Collider secondaryCollider)
         {
             this.builder = builder;
             this.mainHandIK = mainHandIK;
             this.mainHandCollider = mainHandCollider;
+            this.secondaryIK = secondaryIK;
+            this.secondaryCollider = secondaryCollider;
         }
 
         public void SetWeapon(Weapon weapon)
@@ -56,18 +64,20 @@ namespace RoguelikeVR.Weapons
             {
                 this.weapon = weapon;
                 weapon.MainBody.isKinematic = true;
-                CreateWeaponIKDoubler();
+                secondaryGripIndex = weapon.SecondaryGripPoints.Length > 0 ? weapon.SecondaryGripPoints.RandomIndex() : -1;
 
-                if (weapon.MainGrip != null)
-                {
-                    ConfigureMainGrip(weapon);
-                }
+                CreateWeaponIKDoubler();
+                ConfigureMainGrip();
+                ConfigureSecondaryGrip();
+
+                Debug.Break();
 
                 this.WaitFramesAndRun(1, () => weapon.MainBody.isKinematic = false);
             }
             else
             {
                 ReleaseMainGrip();
+                ReleaseSecondaryGrip();
             }
         }
 
@@ -76,24 +86,50 @@ namespace RoguelikeVR.Weapons
             SetWeapon(null);
         }
 
-        private void ConfigureMainGrip(Weapon weapon)
+        private void ConfigureMainGrip()
         {
             if (Initialized)
             {
-                weapon.MainGrip.SetIgnoreCollisions(mainHandCollider, true);
-                SetWeight(mainHandIK, 1f);
-                mainHandUpdater = doubler.MainGripPoint.gameObject.AddComponent<UpdateOtherOnFixedUpdate>();
-                mainHandUpdater.Other = mainHandIK.data.target;
+                if (weapon.MainGrip != null)
+                {
+                    weapon.MainGrip.SetIgnoreCollisions(mainHandCollider, true);
+                    SetWeight(mainHandIK, 1f);
+                    mainHandUpdater = doubler.MainGripPoint.gameObject.AddComponent<UpdateOtherOnFixedUpdate>();
+                    mainHandUpdater.Other = mainHandIK.data.target;
 
-                weapon.transform.rotation = Quaternion.identity;
-                weapon.transform.rotation *= mainHandCollider.transform.rotation * Quaternion.Inverse(weapon.MainGrip.transform.rotation);
+                    weapon.transform.rotation = Quaternion.identity;
+                    weapon.transform.rotation *= mainHandCollider.transform.rotation * Quaternion.Inverse(weapon.MainGrip.transform.rotation);
 
-                var deltaPosition = mainHandCollider.transform.position - weapon.MainGrip.transform.position;
-                weapon.transform.position += deltaPosition;
+                    var deltaPosition = mainHandCollider.transform.position - weapon.MainGrip.transform.position;
+                    weapon.transform.position += deltaPosition;
 
-                mainHandJoint = mainHandCollider.gameObject.AddComponent<FixedJoint>();
-                mainHandJoint.massScale = jointMassScale;
-                mainHandJoint.connectedBody = weapon.MainBody;
+                    mainHandJoint = mainHandCollider.gameObject.AddComponent<FixedJoint>();
+                    mainHandJoint.massScale = jointMassScale;
+                    mainHandJoint.connectedBody = weapon.MainBody;
+                }
+            }
+        }
+
+        private void ConfigureSecondaryGrip()
+        {
+            if (Initialized)
+            {
+                if (weapon.SecondaryGripPoints.Length > 0)
+                {
+                    weapon.SecondaryGripPoints[secondaryGripIndex].SetIgnoreCollisions(secondaryCollider, true);
+                    SetWeight(secondaryIK, 1f);
+                    secondaryUpdater = doubler.SecondaryGrip.gameObject.AddComponent<UpdateOtherOnFixedUpdate>();
+                    secondaryUpdater.Other = secondaryIK.data.target;
+
+                    this.WaitUntilAndRun(
+                        () => Vector3.Distance(secondaryCollider.transform.position, weapon.SecondaryGripPoints[secondaryGripIndex].transform.position) < 0.05f,
+                        () => 
+                        {
+                            secondaryHandJoint = secondaryCollider.gameObject.AddComponent<FixedJoint>();
+                            secondaryHandJoint.massScale = jointMassScale;
+                            secondaryHandJoint.connectedBody = weapon.MainBody;
+                        });
+                }
             }
         }
 
@@ -115,6 +151,24 @@ namespace RoguelikeVR.Weapons
             }
         }
 
+        private void ReleaseSecondaryGrip()
+        {
+            if (Initialized)
+            {
+                SetWeight(secondaryIK, 0f);
+
+                if (secondaryUpdater != null)
+                {
+                    Destroy(secondaryUpdater);
+                }
+
+                if (secondaryHandJoint != null)
+                {
+                    Destroy(secondaryHandJoint);
+                }
+            }
+        }
+
         private void SetWeight(TwoBoneIKConstraint ik, float weight)
         {
             builder.enabled = false;
@@ -130,7 +184,16 @@ namespace RoguelikeVR.Weapons
             }
 
             doubler = Instantiate(doublerPrefab);
-            doubler.Initialize(weapon, mainGripReferencePoint);
+
+            if (secondaryGripIndex >= 0)
+            {
+                doubler.Initialize(weapon, mainGripReferencePoint, secondaryGripIndex);
+            }
+            else
+            {
+                doubler.Initialize(weapon, mainGripReferencePoint);
+            }
+
             doubler.transform.SetParent(doublerParent);
         }
     }
