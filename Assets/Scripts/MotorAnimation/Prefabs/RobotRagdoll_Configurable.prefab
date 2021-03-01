@@ -44,7 +44,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.25
-  m_Center: {x: 0, y: 0.025, z: 0}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!114 &937760177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2321,22 +2321,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -30
+    limit: -5
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 30
+    limit: 5
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 90
+    limit: 45
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 30
+    limit: 5
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: -0.0034306375, y: 0.15822756, z: 0.009807908}

@@ -2262,7 +2262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1267284488
 Transform:
   m_ObjectHideFlags: 0
@@ -2749,6 +2749,10 @@ PrefabInstance:
       propertyPath: reference
       value: 
       objectReference: {fileID: 671040191}
+    - target: {fileID: 4060921065780369958, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
+      propertyPath: debalanceAngle
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7848021817146991628, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
       propertyPath: target
       value: 
@@ -2761,6 +2765,10 @@ PrefabInstance:
       propertyPath: reference
       value: 
       objectReference: {fileID: 99550265}
+    - target: {fileID: 7848021817146991628, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
+      propertyPath: debalanceAngle
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
 --- !u!4 &1417071364 stripped

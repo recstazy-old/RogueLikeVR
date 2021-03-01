@@ -12,6 +12,9 @@ namespace RoguelikeVR
         [SerializeField]
         private Transform mainGripPoint;
 
+        [SerializeField]
+        private bool createGhost;
+
         #endregion
 
         #region Properties
@@ -34,7 +37,10 @@ namespace RoguelikeVR
             var deltaPosition = mainGripReference.transform.position - mainGripPoint.transform.position;
             transform.position += deltaPosition;
 
-            CreateTestVisual(weapon);
+            if (createGhost)
+            {
+                CreateTestVisual(weapon);
+            }
         }
 
         private void CreateTestVisual(Weapon weapon)
