@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RoguelikeVR
 {
-    public class DriveBlend : MonoBehaviour
+    public class DriveBlend : MonoBehaviour, IBlendable
     {
         #region Fields
 
@@ -19,8 +19,9 @@ namespace RoguelikeVR
 
         #region Properties
 
-        public float Blend => blend ? blend.Value : 1f;
+        public float BlendAmount => Blend ? Blend.Value : 1f;
         public ObjectFloatSlider GlobalBlend { get; set; }
+        public ObjectFloatSlider Blend { get => blend; set => blend = value; }
 
         #endregion
 
@@ -65,7 +66,7 @@ namespace RoguelikeVR
 
         private float GetTotalBlend()
         {
-            float total = Blend;
+            float total = BlendAmount;
 
             if (GlobalBlend != null)
             {

@@ -48,7 +48,7 @@ namespace RoguelikeVR
         {
             GlobalBlend = gameObject.AddComponent<ObjectFloatSlider>();
             GlobalBlend.Value = startBlend;
-            var blends = GetComponentsInChildren<DriveBlend>();
+            var blends = GetComponentsInChildren<IBlendable>();
 
             foreach (var b in blends)
             {

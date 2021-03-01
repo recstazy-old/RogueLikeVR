@@ -63,8 +63,6 @@ namespace RoguelikeVR.Weapons
                     ConfigureMainGrip(weapon);
                 }
 
-                Debug.Break();
-
                 this.WaitFramesAndRun(1, () => weapon.MainBody.isKinematic = false);
             }
             else

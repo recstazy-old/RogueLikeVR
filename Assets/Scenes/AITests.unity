@@ -2743,7 +2743,7 @@ PrefabInstance:
       objectReference: {fileID: 1737725253}
     - target: {fileID: 4060921065780369958, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4060921065780369958, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
       propertyPath: reference
@@ -2751,7 +2751,7 @@ PrefabInstance:
       objectReference: {fileID: 671040191}
     - target: {fileID: 4060921065780369958, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
       propertyPath: debalanceAngle
-      value: 50
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 7848021817146991628, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
       propertyPath: target
@@ -2759,7 +2759,7 @@ PrefabInstance:
       objectReference: {fileID: 1737725252}
     - target: {fileID: 7848021817146991628, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7848021817146991628, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
       propertyPath: reference
@@ -2767,7 +2767,7 @@ PrefabInstance:
       objectReference: {fileID: 99550265}
     - target: {fileID: 7848021817146991628, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
       propertyPath: debalanceAngle
-      value: 50
+      value: 75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd071deef9270444ba4b4643e6a7fa94, type: 3}
