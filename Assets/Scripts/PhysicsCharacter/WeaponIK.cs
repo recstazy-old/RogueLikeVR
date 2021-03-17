@@ -121,14 +121,18 @@ namespace RoguelikeVR.Weapons
                     secondaryUpdater = doubler.SecondaryGrip.gameObject.AddComponent<UpdateOtherOnFixedUpdate>();
                     secondaryUpdater.Other = secondaryIK.data.target;
 
-                    this.WaitUntilAndRun(
-                        () => Vector3.Distance(secondaryCollider.transform.position, weapon.SecondaryGripPoints[secondaryGripIndex].transform.position) < 0.05f,
-                        () => 
-                        {
-                            secondaryHandJoint = secondaryCollider.gameObject.AddComponent<FixedJoint>();
-                            secondaryHandJoint.massScale = jointMassScale;
-                            secondaryHandJoint.connectedBody = weapon.MainBody;
-                        });
+                    //this.WaitUntilAndRun(
+                    //    () => Vector3.Distance(secondaryCollider.transform.position, weapon.SecondaryGripPoints[secondaryGripIndex].transform.position) < 0.05f,
+                    //    () => 
+                    //    {
+                    //        secondaryHandJoint = secondaryCollider.gameObject.AddComponent<FixedJoint>();
+                    //        secondaryHandJoint.massScale = jointMassScale;
+                    //        secondaryHandJoint.connectedBody = weapon.MainBody;
+                    //    });
+                }
+                else
+                {
+                    SetWeight(secondaryIK, 0f);
                 }
             }
         }

@@ -31,6 +31,12 @@ namespace RoguelikeVR.AI
         [SerializeField]
         private TargetPoint startTargetPoint;
 
+        [SerializeField]
+        private Transform weaponPose;
+
+        [SerializeField]
+        private Transform weaponPoseParent;
+
         private IWeaponReciever weaponReciever;
         private ITargetPointReciever targetPointReciever;
         private WeaponIK weaponIK;
@@ -59,6 +65,8 @@ namespace RoguelikeVR.AI
             {
                 transform.SetParent(movementBody.transform);
             }
+
+            weaponPose.transform.SetParent(weaponPoseParent);
 
             if (weaponIK != null)
             {
