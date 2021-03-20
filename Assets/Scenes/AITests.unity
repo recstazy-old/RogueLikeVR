@@ -510,7 +510,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157134346}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 19b105edc67760143b8f0343dd908ff6, type: 3}
   m_Controller: {fileID: 9100000, guid: 16487bcfc429096459c04a1ded2259c5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 1
@@ -712,6 +712,14 @@ PrefabInstance:
     - target: {fileID: 2012011814422694312, guid: 3eb6ef49b0984254bb1bec718a1614a8, type: 3}
       propertyPath: m_ConnectedMassScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012011814422694312, guid: 3eb6ef49b0984254bb1bec718a1614a8, type: 3}
+      propertyPath: m_AngularXDrive.maximumForce
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2012011814422694312, guid: 3eb6ef49b0984254bb1bec718a1614a8, type: 3}
+      propertyPath: m_AngularYZDrive.maximumForce
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 2012011814422694318, guid: 3eb6ef49b0984254bb1bec718a1614a8, type: 3}
       propertyPath: m_Drag
@@ -1008,6 +1016,14 @@ PrefabInstance:
     - target: {fileID: 5953989604722429724, guid: 3eb6ef49b0984254bb1bec718a1614a8, type: 3}
       propertyPath: m_ConnectedMassScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953989604722429724, guid: 3eb6ef49b0984254bb1bec718a1614a8, type: 3}
+      propertyPath: m_AngularXDrive.maximumForce
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953989604722429724, guid: 3eb6ef49b0984254bb1bec718a1614a8, type: 3}
+      propertyPath: m_AngularYZDrive.maximumForce
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 6266418794429286604, guid: 3eb6ef49b0984254bb1bec718a1614a8, type: 3}
       propertyPath: m_ConnectedMassScale
