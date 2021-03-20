@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace RoguelikeVR.AI
 {
-    public class ShootingRobotAI : MonoBehaviour, ITargetPointReciever
+    public class ShootingRobotAI : MonoBehaviour, ICharacterDependent
     {
         #region Fields
 
@@ -36,8 +36,18 @@ namespace RoguelikeVR.AI
         #region Properties
 		
         public bool IsActive { get; private set; }
+        public CharacterDependencies Dependencies { get; set; }
+        public int InitOrder => 100;
 
         #endregion
+
+        public void Initialized()
+        {
+            if (Dependencies.StartTargetPoint != null)
+            {
+                SetTargetPoint(Dependencies.StartTargetPoint);
+            }
+        }
 
         public void SetTargetPoint(TargetPoint point)
         {

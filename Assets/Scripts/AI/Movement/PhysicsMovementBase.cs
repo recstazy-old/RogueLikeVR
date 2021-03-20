@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace RoguelikeVR.AI
 {
-    public class PhysicsMovementBase : MonoBehaviour
+    public class PhysicsMovementBase : MonoBehaviour, ICharacterDependent
     {
         #region Fields
 
@@ -32,8 +32,27 @@ namespace RoguelikeVR.AI
         public float NavAgentWaitDistance { get => navAgentWaitDistance; set => navAgentWaitDistance = value; }
         public bool CanMove { get; private set; }
         public Rigidbody Body { get => body; set => body = value; }
+        public CharacterDependencies Dependencies { get; set; }
+        public int InitOrder => 0;
 
         #endregion
+
+        private void FixedUpdate()
+        {
+            if (CanMove)
+            {
+                if (Body != null && navAgent != null)
+                {
+                    navAgent.isStopped = Vector3.Distance(Body.position, navAgent.transform.position) > navAgentWaitDistance;
+                    movementImplementation?.MoveBody(Body, navAgent.transform);
+                }
+            }
+        }
+
+        public void Initialized()
+        {
+            Body = Dependencies.MovementBody;
+        }
 
         public void Initialize()
         {
@@ -49,23 +68,6 @@ namespace RoguelikeVR.AI
                 }
 
                 SetCanMove(canMoveonStart);
-            }
-        }
-
-        private void Start()
-        {
-            Initialize();
-        }
-
-        private void FixedUpdate()
-        {
-            if (CanMove)
-            {
-                if (Body != null && navAgent != null)
-                {
-                    navAgent.isStopped = Vector3.Distance(Body.position, navAgent.transform.position) > navAgentWaitDistance;
-                    movementImplementation?.MoveBody(Body, navAgent.transform);
-                }
             }
         }
 

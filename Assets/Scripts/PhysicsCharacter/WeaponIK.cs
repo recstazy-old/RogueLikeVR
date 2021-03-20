@@ -1,4 +1,5 @@
 using GameOn.UnityHelpers;
+using RoguelikeVR.AI;
 using RoguelikeVR.Interactions;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using UnityEngine.Animations.Rigging;
 
 namespace RoguelikeVR.Weapons
 {
-    public class WeaponIK : MonoBehaviour
+    public class WeaponIK : MonoBehaviour, ICharacterDependent
     {
         #region Fields
 
@@ -49,19 +50,26 @@ namespace RoguelikeVR.Weapons
         #region Properties
 
         public WeaponIKDoubler WeaponDoubler => doubler;
-        public bool Initialized => builder != null && mainHandIK != null;
+        public bool IsInitialized => builder != null && mainHandIK != null;
         public Collider[] MainGripIgnore { get; set; }
         public Collider[] SecondGripIgnore { get; set; }
+        public CharacterDependencies Dependencies { get; set; }
+        public int InitOrder => 90;
 
         #endregion
 
-        public void Initialize(RigBuilder builder, TwoBoneIKConstraint mainHandIK, Collider mainHandCollider, TwoBoneIKConstraint secondaryIK, Collider secondaryCollider)
+        public void Initialized()
         {
-            this.builder = builder;
-            this.mainHandIK = mainHandIK;
-            this.mainHandCollider = mainHandCollider;
-            this.secondaryIK = secondaryIK;
-            this.secondaryCollider = secondaryCollider;
+            Initialize(
+                Dependencies.RigBuilder, 
+                Dependencies.MainHandIK, 
+                Dependencies.Ragdoll.
+                RightHandCollider, 
+                Dependencies.SecondaryIK, 
+                Dependencies.Ragdoll.LeftHandCollider);
+
+            MainGripIgnore = Dependencies.MainGripIgnoreColliders;
+            SecondGripIgnore = Dependencies.SecondGripIgnoreColliders;
         }
 
         public void SetWeapon(Weapon weapon)
@@ -90,9 +98,18 @@ namespace RoguelikeVR.Weapons
             SetWeapon(null);
         }
 
+        private void Initialize(RigBuilder builder, TwoBoneIKConstraint mainHandIK, Collider mainHandCollider, TwoBoneIKConstraint secondaryIK, Collider secondaryCollider)
+        {
+            this.builder = builder;
+            this.mainHandIK = mainHandIK;
+            this.mainHandCollider = mainHandCollider;
+            this.secondaryIK = secondaryIK;
+            this.secondaryCollider = secondaryCollider;
+        }
+
         private void ConfigureMainGrip()
         {
-            if (Initialized)
+            if (IsInitialized)
             {
                 if (weapon.MainGrip != null)
                 {
@@ -117,7 +134,7 @@ namespace RoguelikeVR.Weapons
 
         private void ConfigureSecondaryGrip()
         {
-            if (Initialized && useSecondaryGrip)
+            if (IsInitialized && useSecondaryGrip)
             {
                 if (weapon.SecondaryGripPoints.Length > 0)
                 {
@@ -145,7 +162,7 @@ namespace RoguelikeVR.Weapons
 
         private void ReleaseMainGrip()
         {
-            if (Initialized)
+            if (IsInitialized)
             {
                 SetWeight(mainHandIK, 0f);
 
@@ -163,7 +180,7 @@ namespace RoguelikeVR.Weapons
 
         private void ReleaseSecondaryGrip()
         {
-            if (Initialized)
+            if (IsInitialized)
             {
                 SetWeight(secondaryIK, 0f);
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace RoguelikeVR.Weapons
 {
-    public class WeaponHolder : MonoBehaviour, IWeaponReciever
+    public class WeaponHolder : MonoBehaviour, ICharacterDependent
     {
         #region Fields
 
@@ -26,7 +26,20 @@ namespace RoguelikeVR.Weapons
         public Weapon Weapon => weapon;
         public WeaponTargeting WeaponTargeter => targeting;
 
+        public CharacterDependencies Dependencies { get; set; }
+        public int InitOrder => 91;
+
         #endregion
+
+        public void Initialized()
+        {
+            Dependencies.WeaponPose.SetParent(Dependencies.WeaponPoseParent);
+
+            if (Dependencies.Weapon != null)
+            {
+                SetWeapon(Dependencies.Weapon);
+            }
+        }
 
         public void SetWeapon(Weapon newWeapon)
         {
