@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using GameOn.UnityHelpers;
 
 namespace RoguelikeVR
 {
@@ -12,6 +13,15 @@ namespace RoguelikeVR
         [SerializeField]
         private UnityEvent onDebalanced;
 
+        [SerializeField]
+        private UnityEvent onStartingBalance;
+
+        [SerializeField]
+        private UnityEvent onBalanced;
+
+        [SerializeField]
+        private float startToBalanceTime;
+
         private BoneDebalanceDispatcher[] dispatchers;
 
         #endregion
@@ -19,6 +29,7 @@ namespace RoguelikeVR
         #region Properties
 
         public bool Debalanced { get; private set; }
+        public bool StartedBalaning { get; private set; }
 
         #endregion
 
@@ -43,9 +54,14 @@ namespace RoguelikeVR
             }
         }
 
-        public void ResetDebalance()
+        public void StartBalancing()
         {
-            Debalanced = false;
+            if (Debalanced && !StartedBalaning)
+            {
+                onStartingBalance?.Invoke();
+                StartedBalaning = true;
+                this.RunDelayed(startToBalanceTime, SetBalanced);
+            }
         }
 
         private void BoneDebalanced(BoneDebalanceDispatcher dispatcher)
@@ -55,6 +71,13 @@ namespace RoguelikeVR
                 Debalanced = true;
                 onDebalanced?.Invoke();
             }
+        }
+
+        private void SetBalanced()
+        {
+            StartedBalaning = false;
+            Debalanced = false;
+            onBalanced?.Invoke();
         }
     }
 }

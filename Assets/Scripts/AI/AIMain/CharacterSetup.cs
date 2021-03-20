@@ -37,6 +37,12 @@ namespace RoguelikeVR.AI
         [SerializeField]
         private Transform weaponPoseParent;
 
+        [SerializeField]
+        private Collider[] mainGripIgnoreColliders;
+
+        [SerializeField]
+        private Collider[] secondGripIgnoreColliders;
+
         private IWeaponReciever weaponReciever;
         private ITargetPointReciever targetPointReciever;
         private WeaponIK weaponIK;
@@ -45,6 +51,8 @@ namespace RoguelikeVR.AI
         #endregion
 
         #region Properties
+
+        public float RagdollAnimationWeight { get => ragdoll ? ragdoll.GlobalBlendAmount : 1f; set => ragdoll?.SetGlobalBlend(value); }
 
         #endregion
 
@@ -70,6 +78,8 @@ namespace RoguelikeVR.AI
 
             if (weaponIK != null)
             {
+                weaponIK.MainGripIgnore = mainGripIgnoreColliders;
+                weaponIK.SecondGripIgnore = secondGripIgnoreColliders;
                 weaponIK.Initialize(rigBuilder, mainHandIK, ragdoll.RightHandCollider, secondaryIK, ragdoll.LeftHandCollider);
             }
 

@@ -194,6 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 419942852987541584}
   - component: {fileID: 655697406271364249}
+  - component: {fileID: 3116610732241901899}
   m_Layer: 0
   m_Name: RobotGameLogic
   m_TagString: Untagged
@@ -236,8 +237,29 @@ MonoBehaviour:
   ragdoll: {fileID: 0}
   rigBuilder: {fileID: 0}
   mainHandIK: {fileID: 0}
+  secondaryIK: {fileID: 0}
   weapon: {fileID: 0}
   startTargetPoint: {fileID: 0}
+  weaponPose: {fileID: 0}
+  weaponPoseParent: {fileID: 0}
+  mainGripIgnoreColliders: []
+  secondGripIgnoreColliders: []
+--- !u!114 &3116610732241901899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419942852987541585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b56e59a540beb4c847c4efc27bbc46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformToMove: {fileID: 0}
+  modelHips: {fileID: 0}
+  ragdollHips: {fileID: 0}
+  alignAxesWeights: {x: 1, y: 1, z: 1}
 --- !u!1 &1383761088767082367
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +289,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8604577131852377585}
   m_Father: {fileID: 419942852987541584}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -286,9 +309,9 @@ MonoBehaviour:
   onDebalanced:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: RoguelikeVR.RagdollCharacter, Assembly-CSharp
-        m_MethodName: SetGlobalBlend
+      - m_Target: {fileID: 655697406271364249}
+        m_TargetAssemblyTypeName: RoguelikeVR.AI.CharacterSetup, Assembly-CSharp
+        m_MethodName: set_RagdollAnimationWeight
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -298,6 +321,49 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7759573945199466567}
+        m_TargetAssemblyTypeName: RoguelikeVR.Weapons.WeaponHolder, Assembly-CSharp
+        m_MethodName: ReleaseWeapon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5476301329637358201}
+        m_TargetAssemblyTypeName: RoguelikeVR.CallDelayed, Assembly-CSharp
+        m_MethodName: Call
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStartingBalance:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 655697406271364249}
+        m_TargetAssemblyTypeName: RoguelikeVR.AI.CharacterSetup, Assembly-CSharp
+        m_MethodName: set_RagdollAnimationWeight
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onBalanced:
+    m_PersistentCalls:
+      m_Calls: []
+  startToBalanceTime: 3
 --- !u!114 &4060921065780369958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reference: {fileID: 0}
   target: {fileID: 0}
-  debalanceAngle: 30
+  debalanceAngle: 50
 --- !u!114 &7848021817146991628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,14 +386,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1383761088767082367}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 230ddfbeb5ce6f4459436e30dace8012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 0}
   target: {fileID: 0}
-  debalanceAngle: 30
+  debalanceAngle: 75
 --- !u!1 &2726512026834947611
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPose: {fileID: 5060039457400688522}
   targetPoint: {fileID: 0}
-  lookingConeAngle: 0
+  lookingConeAngle: 60
 --- !u!1 &3504629324389134193
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +506,7 @@ MonoBehaviour:
   doublerParent: {fileID: 5060039457400688522}
   mainGripReferencePoint: {fileID: 6246585071358975310}
   jointMassScale: 0.01
+  useSecondaryGrip: 0
 --- !u!1 &4896680210601388772
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,13 +530,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4896680210601388772}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2436, y: 2.621, z: 0.166}
+  m_LocalRotation: {x: -0.0045524235, y: 0.70709217, z: -0.0045522596, w: 0.7070921}
+  m_LocalPosition: {x: 0.44586593, y: 2.6962926, z: -0.053392064}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419942852987541584}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: -90, z: -180.738}
 --- !u!1 &5109910679953826211
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,10 +603,69 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5930130671527470934}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.306, y: 2.174, z: 0.7640001}
+  m_LocalRotation: {x: -0, y: 0.70710653, z: -0, w: 0.7071071}
+  m_LocalPosition: {x: 1.544, y: 2.6983, z: -0.071}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8696939855877506808}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &8852679077637582333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8604577131852377585}
+  - component: {fileID: 5476301329637358201}
+  m_Layer: 0
+  m_Name: StandUpDelayed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8604577131852377585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852679077637582333}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1253958673640088391}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5476301329637358201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8852679077637582333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce7e4c5b0e3674b47a7ad6f7611cf436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatToCall:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3029396524225086959}
+        m_TargetAssemblyTypeName: RoguelikeVR.DebalanceControl, Assembly-CSharp
+        m_MethodName: StartBalancing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  delay: 3
