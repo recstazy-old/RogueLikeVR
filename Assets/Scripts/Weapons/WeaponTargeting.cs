@@ -17,6 +17,8 @@ namespace RoguelikeVR.Weapons
         [SerializeField]
         private float lookingConeAngle;
 
+        private Quaternion weaponPoseStartRotation;
+
         #endregion
 
         #region Properties
@@ -24,6 +26,11 @@ namespace RoguelikeVR.Weapons
         public TargetPoint TargetPoint { get => targetPoint; set => targetPoint = value; }
 
         #endregion
+
+        private void Start()
+        {
+            weaponPoseStartRotation = weaponPose.localRotation;
+        }
 
         private void FixedUpdate()
         {
@@ -38,7 +45,7 @@ namespace RoguelikeVR.Weapons
                 }
                 else
                 {
-                    weaponPose.transform.localRotation = Quaternion.identity;
+                    weaponPose.transform.localRotation = weaponPoseStartRotation;
                 }
             }
         }

@@ -43,15 +43,7 @@ namespace RoguelikeVR.AI
 
         public void Initialized()
         {
-            if (Dependencies.StartTargetPoint != null)
-            {
-                SetTargetPoint(Dependencies.StartTargetPoint);
-            }
-        }
-
-        public void SetTargetPoint(TargetPoint point)
-        {
-            SetShootingTarget(point);
+            SetShootingTarget(Dependencies.StartTargetPoint);
         }
 
         public void SetShootingTarget(TargetPoint targetPoint)

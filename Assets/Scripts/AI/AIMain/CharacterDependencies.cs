@@ -39,7 +39,7 @@ namespace RoguelikeVR.AI
         private Transform weaponPose;
 
         [SerializeField]
-        private Transform weaponPoseParent;
+        private Transform weaponPosePosition;
 
         [SerializeField]
         private Collider[] mainGripIgnoreColliders;
@@ -60,7 +60,7 @@ namespace RoguelikeVR.AI
         public Weapon Weapon { get => weapon; set => weapon = value; }
         public TargetPoint StartTargetPoint { get => startTargetPoint; set => startTargetPoint = value; }
         public Transform WeaponPose { get => weaponPose; set => weaponPose = value; }
-        public Transform WeaponPoseParent { get => weaponPoseParent; set => weaponPoseParent = value; }
+        public Transform WeaponPosePosition { get => weaponPosePosition; set => weaponPosePosition = value; }
         public Collider[] MainGripIgnoreColliders { get => mainGripIgnoreColliders; set => mainGripIgnoreColliders = value; }
         public Collider[] SecondGripIgnoreColliders { get => secondGripIgnoreColliders; set => secondGripIgnoreColliders = value; }
 

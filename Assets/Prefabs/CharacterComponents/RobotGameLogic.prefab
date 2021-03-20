@@ -460,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPose: {fileID: 5060039457400688522}
   targetPoint: {fileID: 0}
-  lookingConeAngle: 60
+  lookingConeAngle: 45
 --- !u!1 &3378253334500002415
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,7 +33,9 @@ namespace RoguelikeVR.Weapons
 
         public void Initialized()
         {
-            Dependencies.WeaponPose.SetParent(Dependencies.WeaponPoseParent);
+            var follower = Dependencies.WeaponPose.gameObject.AddComponent<CopyTransform>();
+            follower.Target = Dependencies.WeaponPosePosition;
+            follower.Rotation = false;
 
             if (Dependencies.Weapon != null)
             {

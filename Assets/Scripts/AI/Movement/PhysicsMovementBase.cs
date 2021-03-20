@@ -52,6 +52,7 @@ namespace RoguelikeVR.AI
         public void Initialized()
         {
             Body = Dependencies.MovementBody;
+            Initialize();
         }
 
         public void Initialize()

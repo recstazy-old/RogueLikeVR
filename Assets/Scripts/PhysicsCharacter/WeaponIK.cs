@@ -70,6 +70,8 @@ namespace RoguelikeVR.Weapons
 
             MainGripIgnore = Dependencies.MainGripIgnoreColliders;
             SecondGripIgnore = Dependencies.SecondGripIgnoreColliders;
+
+            SetWeapon(null);
         }
 
         public void SetWeapon(Weapon weapon)
@@ -128,8 +130,11 @@ namespace RoguelikeVR.Weapons
                     mainHandJoint = mainHandCollider.gameObject.AddComponent<FixedJoint>();
                     mainHandJoint.massScale = jointMassScale;
                     mainHandJoint.connectedBody = weapon.MainBody;
+                    return;
                 }
             }
+
+            SetWeight(mainHandIK, 0f);
         }
 
         private void ConfigureSecondaryGrip()
@@ -157,7 +162,6 @@ namespace RoguelikeVR.Weapons
             }
 
             SetWeight(secondaryIK, 0f);
-            secondaryIK?.gameObject?.SetActive(false);
         }
 
         private void ReleaseMainGrip()
